@@ -18,6 +18,6 @@ An important aspect of implementing user authentication for us will be to keep t
 
 When it comes time to develop user lists, we plan on creating a subcollection for each user that holds their list. Each list will have a list name and a subcollection of list items each able to hold attributes such as quantity, due date, etc.
 
-![Data Modeling](./assets/data-modeling.png)
+![Data Modeling](./src/assets/data-modeling.png)
 
 This data modeling approach leverages Firebase’s subcollection abilities, simplifies our development process by not having to constantly create document references, and allows for efficient querying of data.
