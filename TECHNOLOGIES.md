@@ -22,4 +22,8 @@ Welcome to the technological backbone of CoShop! Below, you'll find a comprehens
 
 [Firebase](https://firebase.google.com) acts as the backbone of our backend infrastructure. Leveraging Firestore, we utilize Firebase for efficient and scalable database management. Additionally, Firebase's authentication services ensure secure access and personalized experiences for our users.
 
+## Hosting and Deployment
+
+For hosting and deployment, we rely on [Vercel](https://vercel.com). Vercel's robust platform allows us to deploy and scale CoShop effortlessly, ensuring a reliable and performant experience for our users.
+
 Feel free to explore the documentation links provided for each technology to delve deeper into their capabilities and implementation details. At CoShop, we take pride in our commitment to utilizing cutting-edge technologies to deliver an exceptional and reliable platform for our users.
