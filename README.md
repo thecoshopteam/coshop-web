@@ -14,6 +14,8 @@ Read about our MVP proposal [here](./MVP.md).
 
 Read about our definition of done [here](./DONE.md).
 
+Read about what technologies we use to build CoShop Web [here](./TECHNOLOGIES.md).
+
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
