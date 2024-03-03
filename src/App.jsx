@@ -1,16 +1,26 @@
-import React, { useState } from "react";
-import Navbar from "./shared/Navbar";
-import CSList from "./components/CSList";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-export default function App() {
+// Layout imports
+import AppLayout from "./layouts/AppLayout";
+
+// Page imports
+import List from "./pages/List";
+import NotFound from "./pages/NotFound";
+
+const App = () => {
   return (
-    <div className="flex flex-col">
-      <Navbar />
-      <div className="p-5 sm:mt-20 sm:flex sm:flex-col sm:items-center lg:p-10">
-        <h1 className="text-3xl font-semibold">Weekend BBQ</h1>
-        <h2 className="text-xl font-medium text-gray-500">Today</h2>
-        <CSList />
-      </div>
+    <div>
+      <Router>
+        <AppLayout>
+          <Routes>
+            <Route path="/" element={<List />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AppLayout>
+      </Router>
     </div>
   );
-}
+};
+
+export default App;
