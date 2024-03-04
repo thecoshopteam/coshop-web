@@ -1,4 +1,10 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
+
+// Context imports
+import { UserAuth } from "../context/AuthContext";
+
+// MUI component imports
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,6 +17,18 @@ import Menu from "@mui/material/Menu";
 import Divider from "@mui/material/Divider";
 
 const Navbar = () => {
+  const { logoutUser } = UserAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    try {
+      await logoutUser();
+      navigate("/login", { replace: true });
+    } catch (error) {
+      console.error("Error during handleSignOut:", error);
+    }
+  };
+
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleMenu = (event) => {
@@ -66,7 +84,7 @@ const Navbar = () => {
               <MenuItem onClick={handleClose}>Profile</MenuItem>
               <MenuItem onClick={handleClose}>Report a Bug</MenuItem>
               <Divider />
-              <MenuItem onClick={handleClose}>Log Out</MenuItem>
+              <MenuItem onClick={handleSignOut}>Log Out</MenuItem>
             </Menu>
           </div>
         </Toolbar>
