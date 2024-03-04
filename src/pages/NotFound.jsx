@@ -2,7 +2,7 @@ import React from "react";
 
 // MUI component imports
 import Button from "@mui/material/Button";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import ListAltIcon from "@mui/icons-material/ListAlt";
 
 const NotFound = () => {
   return (
@@ -17,9 +17,9 @@ const NotFound = () => {
         href="/"
         type="button"
         variant="contained"
-        endIcon={<DashboardIcon />}
+        endIcon={<ListAltIcon />}
       >
-        Back to Dashboard
+        Back to your list
       </Button>
     </div>
   );
