@@ -25,7 +25,7 @@ const Navbar = () => {
       await logoutUser();
       navigate("/login", { replace: true });
     } catch (error) {
-      console.error("Error during handleSignOut:", error);
+      console.error(error);
     }
   };
 
