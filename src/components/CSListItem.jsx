@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+
+// MUI component imports
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";

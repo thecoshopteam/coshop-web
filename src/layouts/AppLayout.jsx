@@ -1,19 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// Shared component imports
 import Navbar from "../shared/Navbar";
 
-const Layout = ({ children }) => {
+const AppLayout = ({ children }) => {
   return (
-    <div>
+    <div className="flex min-h-svh flex-col">
       <Navbar />
-      <main>{children}</main>
+      <main className="h-full flex-1">{children}</main>
     </div>
   );
 };
 
-Layout.propTypes = {
+AppLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default Layout;
+export default AppLayout;

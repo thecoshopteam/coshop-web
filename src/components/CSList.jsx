@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+
+// MUI component imports
 import List from "@mui/material/List";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
-import CSListItem from "./CSListItem";
 import AddIcon from "@mui/icons-material/Add";
+
+// Local component imports
+import CSListItem from "./CSListItem";
 
 const CSList = () => {
   const storedItems = JSON.parse(localStorage.getItem("items")) || [];
@@ -17,7 +21,8 @@ const CSList = () => {
     updateList(updatedList);
   };
 
-  const handleAddItem = () => {
+  const handleAddItem = (event) => {
+    event.preventDefault();
     if (newItemTitle.trim() !== "") {
       const newItem = {
         id: items.length + 1,
@@ -42,21 +47,17 @@ const CSList = () => {
 
   return (
     <div>
-      <div className="my-8 flex items-center gap-4">
+      <form className="my-8 flex items-center gap-4" onSubmit={handleAddItem}>
         <Input
           type="text"
           placeholder="Enter item title"
           value={newItemTitle}
           onChange={(e) => setNewItemTitle(e.target.value)}
         />
-        <Button
-          variant="contained"
-          endIcon={<AddIcon />}
-          onClick={handleAddItem}
-        >
+        <Button type="submit" variant="contained" endIcon={<AddIcon />}>
           Add Item
         </Button>
-      </div>
+      </form>
       <List className="w-full max-w-md">
         {items.map((item) => (
           <CSListItem
