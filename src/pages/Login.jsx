@@ -26,7 +26,7 @@ const Login = () => {
       navigate("/", { replace: true });
     } catch (error) {
       setErrorMessage("Error. Please try again.");
-      console.error("Error during handleLogin:", error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -43,12 +43,14 @@ const Login = () => {
           type="email"
           placeholder="Email address"
           onChange={(event) => setEmail(event.target.value)}
+          required
         />
         <Input
           name="password"
           type="password"
           placeholder="Password"
           onChange={(event) => setPassword(event.target.value)}
+          required
         />
         {errorMessage && (
           <p className="text-center font-semibold text-red-500">

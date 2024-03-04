@@ -31,7 +31,7 @@ const Register = () => {
       navigate("/", { replace: true });
     } catch (error) {
       setErrorMessage("Error. Please try again.");
-      console.error("Error during handleRegistration:", error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -48,18 +48,21 @@ const Register = () => {
           type="email"
           placeholder="Email address"
           onChange={(event) => setEmail(event.target.value)}
+          required
         />
         <Input
           name="password"
           type="password"
           placeholder="Password"
           onChange={(event) => setPassword(event.target.value)}
+          required
         />
         <Input
           name="passwordConfirmation"
           type="password"
           placeholder="Confirm your password"
           onChange={(event) => setPasswordConfirmation(event.target.value)}
+          required
         />
         {errorMessage && (
           <p className="text-center font-semibold text-red-500">
