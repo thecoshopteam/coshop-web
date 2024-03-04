@@ -6,9 +6,9 @@ import Navbar from "../shared/Navbar";
 
 const AppLayout = ({ children }) => {
   return (
-    <div className="flex min-h-svh flex-col">
+    <div>
       <Navbar />
-      <main className="h-full flex-1">{children}</main>
+      <main>{children}</main>
     </div>
   );
 };

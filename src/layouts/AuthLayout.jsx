@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const AuthLayout = ({ children }) => {
   return (
-    <div className="flex min-h-svh flex-col ">
+    <div className="flex min-h-svh">
       <main className="flex flex-1 items-center justify-center px-4">
         {children}
       </main>
