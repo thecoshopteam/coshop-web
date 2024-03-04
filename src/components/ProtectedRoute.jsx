@@ -8,11 +8,11 @@ import { UserAuth } from "../context/AuthContext";
 function ProtectedRoute({ children }) {
   const { user } = UserAuth();
 
-  if (!user) {
+  if (user) {
+    return children;
+  } else {
     return <Navigate to="/login" replace={true} />;
   }
-
-  return children;
 }
 
 ProtectedRoute.propTypes = {

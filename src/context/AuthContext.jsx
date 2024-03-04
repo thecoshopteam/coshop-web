@@ -19,16 +19,16 @@ export const AuthContextProvider = ({ children }) => {
 
   const registerUser = async (email, password) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(
+      const userCredentials = await createUserWithEmailAndPassword(
         auth,
         email,
         password,
       );
-      const user = userCredential.user;
-      createUserDocument(user);
+      const user = userCredentials.user;
+      await createUserDocument(user);
       console.log(`${user.email} was successfully registered.`);
     } catch (error) {
-      console.error("Error during createUser:", error);
+      throw new Error(`registerUser failed: ${error.message}`);
     }
   };
 
@@ -38,21 +38,21 @@ export const AuthContextProvider = ({ children }) => {
         email: user.email,
       });
     } catch (error) {
-      console.error("Error during createUserDocument:", error);
+      throw new Error(`createUserDocument failed: ${error.message}`);
     }
   };
 
   const loginUser = async (email, password) => {
     try {
-      const userCredential = await signInWithEmailAndPassword(
+      const userCredentials = await signInWithEmailAndPassword(
         auth,
         email,
         password,
       );
-      const user = userCredential.user;
+      const user = userCredentials.user;
       console.log(`${user.email} was successfully logged in.`);
     } catch (error) {
-      console.error("Error during loginUser:", error);
+      throw new Error(`loginUser failed: ${error.message}`);
     }
   };
 
@@ -61,7 +61,7 @@ export const AuthContextProvider = ({ children }) => {
       await signOut(auth);
       console.log(`User was successfully logged out.`);
     } catch (error) {
-      console.error("Error during logoutUser:", error);
+      throw new Error(`logoutUser failed: ${error.message}`);
     }
   };
 
