@@ -1,4 +1,4 @@
-# CI/CD Team Philosophy
+# Our CI/CD Team Philosophy
 
 We believe in continuous integration and deployment in order to deliver quality code quicker.
 
