@@ -1,14 +1,16 @@
 import React from 'react';
-import { render, fireEvent, cleanup } from '@testing-library/react';
-import CSListItem from './CSList.jsx';
+import { render, fireEvent } from '@testing-library/react';
+import CSList from './CSList';
+import CSListItem from './CSListItem';
 
-describe('handleAddItem function', () => {
+describe('CRUD Operations', () => {
   let localStorageMock;
 
   beforeEach(() => {
     localStorageMock = {
-      getItem: jest.fn(() => null),
+      getItem: jest.fn(() => JSON.stringify([])),
       setItem: jest.fn(),
+      clear: jest.fn()
     };
     Object.defineProperty(window, 'localStorage', { value: localStorageMock });
   });
@@ -17,12 +19,12 @@ describe('handleAddItem function', () => {
     jest.clearAllMocks();
   });
 
-  it('should add a new item to the list and local storage', () => {
-    const { getByPlaceholderText, getByText, queryByText } = render(<CSListItem />);
-
+  it('should add three new items to the list and local storage (Create) and then delete one item (Delete)', () => {
+    const { getByPlaceholderText, getByText, queryByText, getAllByLabelText } = render(<CSList />);
     const input = getByPlaceholderText('Enter item title');
     const addButton = getByText('Add Item');
 
+    // Add Peanut Butter to the list as the first item
     fireEvent.change(input, { target: { value: 'Peanut Butter' } });
     fireEvent.click(addButton);
 
@@ -30,7 +32,49 @@ describe('handleAddItem function', () => {
       'items',
       JSON.stringify([{ id: 1, title: 'Peanut Butter', isBought: false }])
     );
-
     expect(queryByText('Peanut Butter')).toBeTruthy();
+
+    // Add Jelly as the second item
+    fireEvent.change(input, { target: { value: 'Jelly' } });
+    fireEvent.click(addButton);
+
+    expect(localStorageMock.setItem).toHaveBeenCalledWith(
+      'items',
+      JSON.stringify([
+        { id: 1, title: 'Peanut Butter', isBought: false },
+        { id: 2, title: 'Jelly', isBought: false }
+      ])
+    );
+    expect(queryByText('Jelly')).toBeTruthy();
+
+    // Add Bread as the third item
+    fireEvent.change(input, { target: { value: 'Bread' } });
+    fireEvent.click(addButton);
+
+    expect(localStorageMock.setItem).toHaveBeenCalledWith(
+      'items',
+      JSON.stringify([
+        { id: 1, title: 'Peanut Butter', isBought: false },
+        { id: 2, title: 'Jelly', isBought: false },
+        { id: 3, title: 'Bread', isBought: false }
+      ])
+    );
+    expect(queryByText('Bread')).toBeTruthy();
+
+    // Delete the second item (Jelly)
+    const deleteButtons = getAllByLabelText('delete');
+    fireEvent.click(deleteButtons[1]);
+
+    // Assert that Jelly is no longer in the list
+    expect(queryByText('Jelly')).not.toBeTruthy();
+
+    // Assert that localStorage.setItem is called with the updated list
+    expect(localStorageMock.setItem).toHaveBeenCalledWith(
+      'items',
+      JSON.stringify([
+        { id: 1, title: 'Peanut Butter', isBought: false },
+        { id: 3, title: 'Bread', isBought: false }
+      ])
+    );
   });
 });
