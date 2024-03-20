@@ -4,7 +4,6 @@ import CSList from "./CSList";
 import CSListItem from "./CSListItem";
 import '@testing-library/jest-dom';
 
-
 describe("CRUD Operations", () => {
   let localStorageMock;
 
