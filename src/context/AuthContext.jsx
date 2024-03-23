@@ -16,6 +16,7 @@ const UserContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const registerUser = async (email, password) => {
     try {
@@ -69,6 +70,7 @@ export const AuthContextProvider = ({ children }) => {
     // Set up a listener for authentication state changes
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setLoading(false); // Update loading state after getting user state
     });
 
     // Cleanup: Unsubscribe from the listener when the component is unmounted
@@ -82,7 +84,9 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ registerUser, loginUser, logoutUser, user }}>
+    <UserContext.Provider
+      value={{ registerUser, loginUser, logoutUser, user, loading }}
+    >
       {children}
     </UserContext.Provider>
   );

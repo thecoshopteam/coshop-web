@@ -124,7 +124,7 @@ We use a pre-commit hook to handle code formatting using Husky. This ensures con
    git checkout -b bug-fix/your-bug-fix dev
    ```
 
-2. Make your changes, commit them, and push your branch:
+2. Make your changes, test them thoroughly locally, and then commit your changes to your feature branch:
 
    ```bash
    # Feature example
@@ -137,22 +137,16 @@ We use a pre-commit hook to handle code formatting using Husky. This ensures con
    git commit -m "Description of your bug fix"
    git push origin bug-fix/your-bug-fix
    ```
+   
+3. For additional testing, merge your `feature` branch into the `staging` branch.
 
-3. Once your branch has been pushed, Vercel will automatically create a Preview Deployment of your feature or big fix branch with a custom URL that you can share with the team for collaborative review.
+4. Test your changes in the staging environment with the [custom URL](https://staging.app.shopwithcoshop.com/).
 
-4. After review, create a pull request from your feature branch to the `dev` branch.
+5. If everything tests correctly in the staging site, create a pull request from `staging` to `main` on GitHub.
 
-5. Once the changes are reviewed and approved by your lead, they can be merged into `dev`.
+6. After final review and approval from your lead, they will merge your changes into the `main` branch for production releases!
 
-6. For additional testing, merge changes from `dev` into the `staging` branch.
-
-7. Test your changes on the staging environment with the [custom URL](https://staging.app.shopwithcoshop.com/).
-
-8. If everything looks good on `staging`, create a pull request from `staging` to `main`.
-
-9. After final review and approval, changes are merged into the `main` branch for production releases!
-
-By following this workflow, we ensure that we maintain a stable `main` branch for our visitors, ensure a controlled development environment on the `development` branch, utilize `feature` and `bug fix` branches for an isolated environment, and conduct pre-production testing on the `staging` branch before releasing our excited new changes.
+By following this workflow, we ensure that we maintain a stable `main` branch for our visitors, utilize `feature` and `bug fix` branches for an isolated environment, and conduct pre-production testing on the `staging` branch before releasing our excited new changes.
 
 ### License
 
