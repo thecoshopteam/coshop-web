@@ -6,12 +6,10 @@ import { Navigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 
 function ProtectedRoute({ children }) {
-  const { user } = UserAuth();
+  const { user, loading } = UserAuth();
 
-  if (user) {
-    return children;
-  } else {
-    return <Navigate to="/login" replace={true} />;
+  if (!loading) {
+    return user ? children : <Navigate to="/login" replace />;
   }
 }
 
