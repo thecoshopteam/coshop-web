@@ -24,6 +24,27 @@ const CSList = () => {
   const handleAddItem = (event) => {
     event.preventDefault();
     if (newItemTitle.trim() !== "") {
+      // Convert both the new item title and existing item titles to lowercase and remove spaces
+      const newItemTitleNormalized = newItemTitle
+        .trim()
+        .toLowerCase()
+        .replace(/\s/g, "");
+      const existingItem = items.find(
+        (item) =>
+          item.title.trim().toLowerCase().replace(/\s/g, "") ===
+          newItemTitleNormalized,
+      );
+
+      if (existingItem) {
+        // If the item already exists, ask the user if they want to add it again
+        const confirmation = window.confirm(
+          "This item already exists in the list. Do you still want to add it?",
+        );
+        if (!confirmation) {
+          // If the user cancels, return without adding the duplicate item
+          return;
+        }
+      }
       const newItem = {
         id: items.length + 1,
         title: newItemTitle,
