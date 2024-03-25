@@ -15,6 +15,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import List from "./pages/List";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -44,6 +45,16 @@ const App = () => {
               <ProtectedRoute>
                 <AppLayout>
                   <List />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <Profile />
                 </AppLayout>
               </ProtectedRoute>
             }

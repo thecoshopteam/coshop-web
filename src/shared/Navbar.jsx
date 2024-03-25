@@ -10,7 +10,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
@@ -47,10 +47,11 @@ const Navbar = () => {
             size="large"
             edge="start"
             color="inherit"
-            aria-label="menu"
+            aria-label="home"
             sx={{ mr: 2 }}
+            href="/"
           >
-            <MenuIcon />
+            <HomeIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             CoShop
@@ -81,7 +82,9 @@ const Navbar = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem>
+                <a href="/profile">Profile</a>
+              </MenuItem>
               <MenuItem onClick={handleClose}>Report a Bug</MenuItem>
               <Divider />
               <MenuItem onClick={handleSignOut}>Log Out</MenuItem>
