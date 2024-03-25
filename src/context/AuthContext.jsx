@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  updateEmail,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
@@ -66,6 +67,15 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const updateUserEmail = async (email) => {
+    try {
+      await updateEmail(user, email);
+      console.log(`User email was successfully updated.`);
+    } catch (error) {
+      throw new Error(`updateUserEmail failed: ${error.message}`);
+    }
+  };
+
   useEffect(() => {
     // Set up a listener for authentication state changes
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -85,7 +95,14 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ registerUser, loginUser, logoutUser, user, loading }}
+      value={{
+        registerUser,
+        loginUser,
+        logoutUser,
+        updateUserEmail,
+        user,
+        loading,
+      }}
     >
       {children}
     </UserContext.Provider>
