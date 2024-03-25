@@ -18,59 +18,65 @@ import List from "./pages/List";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
+// Theme imports
+import { ThemeProvider } from "@mui/material";
+import CoShopTheme from "./lib/CoShopTheme";
+
 const App = () => {
   return (
     <AuthContextProvider>
-      <Router>
-        <Routes>
-          <Route
-            path="/register"
-            element={
-              <AuthLayout>
-                <Register />
-              </AuthLayout>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <AuthLayout>
-                <Login />
-              </AuthLayout>
-            }
-          />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <AppLayout>
-                  <List />
-                </AppLayout>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <AppLayout>
-                  <Profile />
-                </AppLayout>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <ProtectedRoute>
-                <AppLayout>
-                  <NotFound />
-                </AppLayout>
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </Router>
+      <ThemeProvider theme={CoShopTheme}>
+        <Router>
+          <Routes>
+            <Route
+              path="/register"
+              element={
+                <AuthLayout>
+                  <Register />
+                </AuthLayout>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <AuthLayout>
+                  <Login />
+                </AuthLayout>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <AppLayout>
+                    <List />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <AppLayout>
+                    <Profile />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <ProtectedRoute>
+                  <AppLayout>
+                    <NotFound />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </Router>
+      </ThemeProvider>
     </AuthContextProvider>
   );
 };
