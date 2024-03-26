@@ -8,26 +8,48 @@ import Button from "@mui/material/Button";
 import { UserAuth } from "../context/AuthContext";
 
 const Profile = () => {
-  const { user, updateUserEmail } = UserAuth();
+  const { user, updateUserEmail, updateUserPassword } = UserAuth();
 
   const [email, setEmail] = useState(user.email);
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [emailLoading, setEmailLoading] = useState(false);
+  const [emailMessage, setEmailMessage] = useState("");
+
+  const [passwordLoading, setPasswordLoading] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState("");
 
   async function updateEmail(event) {
     event.preventDefault();
-    setMessage("");
-    setLoading(true);
+    setEmailMessage("");
+    setEmailLoading(true);
     try {
       await updateUserEmail(email);
-      setMessage("Your email address has been updated!");
+      setEmailMessage("Your email address has been updated!");
     } catch (error) {
-      setMessage(
+      setEmailMessage(
         "An error has occurred. Please make sure you've logged in recently and try again.",
       );
       console.error(error);
     } finally {
-      setLoading(false);
+      setEmailLoading(false);
+    }
+  }
+
+  async function updatePassword(event) {
+    event.preventDefault();
+    setPasswordMessage("");
+    setPasswordLoading(true);
+    try {
+      await updateUserPassword(password);
+      setPasswordMessage("Your password has been updated!");
+    } catch (error) {
+      setPasswordMessage(
+        "An error has occurred. Please make sure you've logged in recently and try again.",
+      );
+      console.error(error);
+    } finally {
+      setPasswordLoading(false);
     }
   }
 
@@ -42,17 +64,43 @@ const Profile = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              disabled={loading}
+              disabled={emailLoading}
             />
-            <Button type="submit" variant="outlined" disabled={loading}>
-              {loading ? "Updating..." : "Update"}
+            <Button type="submit" variant="outlined" disabled={emailLoading}>
+              {emailLoading ? "Updating..." : "Update"}
             </Button>
           </div>
-          <p className="text-balance text-sm">
+          <p className="text-balance text-sm font-medium">
             For security reasons, you need to have recently logged in to do this
             action.
           </p>
-          {message && <p className="font-semibold">{message}</p>}
+          {emailMessage && <p className="font-semibold">{emailMessage}</p>}
+        </form>
+      </div>
+      <div className="mt-10 space-y-1">
+        <h2 className="text-xl font-medium">Password</h2>
+        <form onSubmit={updatePassword} className="space-y-2">
+          <div className="flex gap-2">
+            <Input
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={passwordLoading}
+            />
+            <Button type="submit" variant="outlined" disabled={passwordLoading}>
+              {passwordLoading ? "Updating..." : "Update"}
+            </Button>
+          </div>
+          <p className="text-balance text-sm">
+            Please ensure your password is at least 8 characters long for
+            enhanced security.
+          </p>
+          <p className="text-balance text-sm font-medium">
+            For security reasons, you need to have recently logged in to do this
+            action.
+          </p>
+          {passwordMessage && (
+            <p className="font-semibold">{passwordMessage}</p>
+          )}
         </form>
       </div>
     </div>

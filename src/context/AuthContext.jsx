@@ -10,6 +10,7 @@ import {
   signOut,
   onAuthStateChanged,
   updateEmail,
+  updatePassword,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
@@ -67,12 +68,21 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const updateUserEmail = async (email) => {
+  const updateUserEmail = async (newEmail) => {
     try {
-      await updateEmail(user, email);
+      await updateEmail(user, newEmail);
       console.log(`User email was successfully updated.`);
     } catch (error) {
       throw new Error(`updateUserEmail failed: ${error.message}`);
+    }
+  };
+
+  const updateUserPassword = async (newPassword) => {
+    try {
+      await updatePassword(user, newPassword);
+      console.log(`User password was successfully updated.`);
+    } catch (error) {
+      throw new Error(`updateUserPassword failed: ${error.message}`);
     }
   };
 
@@ -100,6 +110,7 @@ export const AuthContextProvider = ({ children }) => {
         loginUser,
         logoutUser,
         updateUserEmail,
+        updateUserPassword,
         user,
         loading,
       }}
