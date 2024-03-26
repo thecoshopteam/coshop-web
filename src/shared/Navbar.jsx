@@ -82,9 +82,9 @@ const Navbar = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem>
-                <a href="/profile">Profile</a>
-              </MenuItem>
+              <a href="/profile">
+                <MenuItem>Profile</MenuItem>
+              </a>
               <MenuItem onClick={handleClose}>Report a Bug</MenuItem>
               <Divider />
               <MenuItem onClick={handleSignOut}>Log Out</MenuItem>
