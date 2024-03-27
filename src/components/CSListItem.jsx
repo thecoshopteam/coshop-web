@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 // MUI component imports
@@ -9,14 +9,25 @@ import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import TextField from "@mui/material/TextField";
 
 const CSListItem = ({
   id,
   title,
   isBought,
+  quantity,
   handleCheckboxToggle,
   handleDeleteItem,
+  handleQuantityChange,
 }) => {
+  const [localQuantity, setLocalQuantity] = useState(quantity);
+
+  const handleChange = (event) => {
+    const newQuantity = event.target.value;
+    setLocalQuantity(newQuantity);
+    handleQuantityChange(newQuantity);
+  };
+
   return (
     <ListItem
       key={id}
@@ -44,6 +55,13 @@ const CSListItem = ({
             color: isBought ? "gray" : "inherit",
           }}
         />
+        <TextField
+          type="number"
+          value={localQuantity}
+          onChange={handleChange}
+          label="Quantity"
+          inputProps={{ min: 1 }}
+        />
       </ListItemButton>
     </ListItem>
   );
@@ -53,8 +71,10 @@ CSListItem.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   isBought: PropTypes.bool.isRequired,
+  quantity: PropTypes.number.isRequired,
   handleCheckboxToggle: PropTypes.func.isRequired,
   handleDeleteItem: PropTypes.func.isRequired,
+  handleQuantityChange: PropTypes.func.isRequired,
 };
 
 export default CSListItem;
