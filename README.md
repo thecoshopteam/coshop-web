@@ -82,6 +82,13 @@ npm run dev
 
 We use a pre-commit hook to handle code formatting using Husky. This ensures consistent and clean code. Before making a commit, the pre-commit hook will run automatically.
 
+If at any point you want to manually run the formatting command, use the following:
+
+```bash
+# Format all files except those in .prettierignore
+npm run format
+```
+
 #### Branching Strategy
 
 1. Main Branch (`main`):
@@ -92,25 +99,19 @@ We use a pre-commit hook to handle code formatting using Husky. This ensures con
 2. Staging Branch (`staging`):
 
    - Serves as a staging environment for pre-release testing.
-   - Code from `development` is merged into `staging` for broader testing and verification before reaching the main branch.
+   - Code from `feature` or `bug-fix` branches are merged into `staging` for broader testing and verification before reaching the main branch.
    - This branch is configured with a [custom URL](https://staging.app.shopwithcoshop.com/).
 
-3. Development Branch (`development`):
+3. Feature Branches (`feature/your-feature`):
 
-   - Acts as an integration branch where `feature` branches and `bug fix` branches are merged to ensure they work well together.
-   - Provides a stable environment for ongoing development.
-   - Allows for continuous integration and testing of features and bug fixes.
-
-4. Feature Branches (`feature/your-feature`):
-
-   - Created from `development` for developing new features.
+   - Created from `main` for developing new features.
    - Isolated work on a specific feature or enhancement.
-   - Merged back into `development` after completion and testing.
+   - Merged into `staging` after completion for testing.
 
-5. Bug Fix Branches (`bug-fix/your-bug-fix`):
-   - Created from `development` for addressing bugs or issues.
+4. Bug Fix Branches (`bug-fix/your-bug-fix`):
+   - Created from `main` for addressing bugs or issues.
    - Isolated work on a specific bug fix.
-     -Merged back into `development` after completion and testing.
+     -Merged into `staging` after completion for testing.
 
 #### Workflow Example
 
@@ -137,14 +138,14 @@ We use a pre-commit hook to handle code formatting using Husky. This ensures con
    git commit -m "Description of your bug fix"
    git push origin bug-fix/your-bug-fix
    ```
-   
+
 3. For additional testing, merge your `feature` branch into the `staging` branch.
 
 4. Test your changes in the staging environment with the [custom URL](https://staging.app.shopwithcoshop.com/).
 
 5. If everything tests correctly in the staging site, create a pull request from `staging` to `main` on GitHub.
 
-6. After final review and approval from your lead, they will merge your changes into the `main` branch for production releases!
+6. After final review and approval from your either Julian or Amna, they will merge your changes into the `main` branch for production releases!
 
 By following this workflow, we ensure that we maintain a stable `main` branch for our visitors, utilize `feature` and `bug fix` branches for an isolated environment, and conduct pre-production testing on the `staging` branch before releasing our excited new changes.
 
