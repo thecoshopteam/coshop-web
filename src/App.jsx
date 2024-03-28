@@ -18,6 +18,7 @@ import List from "./pages/List";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import AboutUs from "./pages/AboutUs";
+
 // Theme imports
 import { ThemeProvider } from "@mui/material";
 import CoShopTheme from "./lib/CoShopTheme";
@@ -65,21 +66,21 @@ const App = () => {
               }
             />
             <Route
-              path="*"
-              element={
-                <ProtectedRoute>
-                  <AppLayout>
-                    <NotFound />
-                  </AppLayout>
-                </ProtectedRoute>
-              }
-            />
-            <Route
               path="/about-us"
               element={
                 <ProtectedRoute>
                   <AppLayout>
                     <AboutUs />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <ProtectedRoute>
+                  <AppLayout>
+                    <NotFound />
                   </AppLayout>
                 </ProtectedRoute>
               }
