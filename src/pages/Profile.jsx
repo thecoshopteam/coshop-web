@@ -63,7 +63,7 @@ const Profile = () => {
             <Input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               disabled={emailLoading}
             />
             <Button type="submit" variant="outlined" disabled={emailLoading}>
@@ -83,7 +83,7 @@ const Profile = () => {
           <div className="flex gap-2">
             <Input
               type="password"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               disabled={passwordLoading}
             />
             <Button type="submit" variant="outlined" disabled={passwordLoading}>

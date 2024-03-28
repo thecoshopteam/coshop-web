@@ -2,7 +2,7 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import CSList from "./CSList";
 import CSListItem from "./CSListItem";
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
 describe("CRUD Operations", () => {
   let localStorageMock;
@@ -82,21 +82,21 @@ describe("CRUD Operations", () => {
     // Mock the event that the Bread has been bought
     const listItemButtons = getAllByLabelText("checkbox");
     fireEvent.click(listItemButtons[1]);
-     expect(localStorageMock.setItem).toHaveBeenCalledWith(
-          "items",
-          JSON.stringify([
-            { id: 1, title: "Peanut Butter", isBought: false },
-            { id: 3, title: "Bread", isBought: true },
-          ])
-        );
-     // Test the event that the Bread had been checked off accidentally
-     fireEvent.click(listItemButtons[1]);
-     expect(localStorageMock.setItem).toHaveBeenCalledWith(
-        "items",
-        JSON.stringify([
-            { id: 1, title: "Peanut Butter", isBought: false },
-            { id: 3, title: "Bread", isBought: false },
-        ])
-     );
+    expect(localStorageMock.setItem).toHaveBeenCalledWith(
+      "items",
+      JSON.stringify([
+        { id: 1, title: "Peanut Butter", isBought: false },
+        { id: 3, title: "Bread", isBought: true },
+      ]),
+    );
+    // Test the event that the Bread had been checked off accidentally
+    fireEvent.click(listItemButtons[1]);
+    expect(localStorageMock.setItem).toHaveBeenCalledWith(
+      "items",
+      JSON.stringify([
+        { id: 1, title: "Peanut Butter", isBought: false },
+        { id: 3, title: "Bread", isBought: false },
+      ]),
+    );
   });
 });

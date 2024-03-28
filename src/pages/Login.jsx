@@ -17,7 +17,7 @@ const Login = () => {
   const { loginUser } = UserAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async (event) => {
+  const handleLogin = async event => {
     event.preventDefault();
     setErrorMessage("");
     setLoading(true);
@@ -42,14 +42,14 @@ const Login = () => {
           name="email"
           type="email"
           placeholder="Email address"
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={event => setEmail(event.target.value)}
           required
         />
         <Input
           name="password"
           type="password"
           placeholder="Password"
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={event => setPassword(event.target.value)}
           required
         />
         {errorMessage && (

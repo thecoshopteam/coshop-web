@@ -35,7 +35,7 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const createUserDocument = async (user) => {
+  const createUserDocument = async user => {
     try {
       await setDoc(doc(db, `users/${user.uid}`), {
         email: user.email,
@@ -68,7 +68,7 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const updateUserEmail = async (newEmail) => {
+  const updateUserEmail = async newEmail => {
     try {
       await updateEmail(user, newEmail);
       console.log(`User email was successfully updated.`);
@@ -77,7 +77,7 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const updateUserPassword = async (newPassword) => {
+  const updateUserPassword = async newPassword => {
     try {
       await updatePassword(user, newPassword);
       console.log(`User password was successfully updated.`);
@@ -88,7 +88,7 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     // Set up a listener for authentication state changes
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, currentUser => {
       setUser(currentUser);
       setLoading(false); // Update loading state after getting user state
     });

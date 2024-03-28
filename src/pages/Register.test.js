@@ -1,5 +1,11 @@
 import React from "react";
-import { render, fireEvent, screen, waitFor, act } from "@testing-library/react";
+import {
+  render,
+  fireEvent,
+  screen,
+  waitFor,
+  act,
+} from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Register from "./Register";
 import { UserAuth } from "../context/AuthContext";
@@ -16,7 +22,7 @@ describe("Register Component", () => {
     render(
       <Router>
         <Register />
-      </Router>
+      </Router>,
     );
   });
 
@@ -24,7 +30,7 @@ describe("Register Component", () => {
     const { getByText, getByPlaceholderText, getByRole } = render(
       <Router>
         <Register />
-      </Router>
+      </Router>,
     );
 
     fireEvent.change(getByPlaceholderText("Email address"), {
@@ -45,46 +51,45 @@ describe("Register Component", () => {
     // Check if the error message is present
     const errorMessage = screen.queryByText("Passwords do not match");
     expect(errorMessage).not.toBeNull();
+  });
+
+  it("successfully registers the user if passwords match", async () => {
+    // Mock navigate function
+    const mockNavigate = jest.fn();
+    jest.mock("react-router-dom", () => ({
+      ...jest.requireActual("react-router-dom"),
+      useNavigate: () => mockNavigate,
+    }));
+
+    // Render the Register component
+    const { getByPlaceholderText, getByRole, getByText } = render(
+      <Router>
+        <Register />
+      </Router>,
+    );
+
+    // Simulate input events to enter matching passwords
+    fireEvent.change(getByPlaceholderText("Email address"), {
+      target: { value: "test@example.com" },
+    });
+    fireEvent.change(getByPlaceholderText("Password"), {
+      target: { value: "password" },
+    });
+    fireEvent.change(getByPlaceholderText("Confirm your password"), {
+      target: { value: "password" },
     });
 
+    // Simulate form submission
+    fireEvent.click(getByRole("button", { name: /register/i }));
 
-    it("successfully registers the user if passwords match", async () => {
-        // Mock navigate function
-        const mockNavigate = jest.fn();
-        jest.mock("react-router-dom", () => ({
-          ...jest.requireActual("react-router-dom"),
-          useNavigate: () => mockNavigate,
-        }));
+    // Wrap assertions that involve state updates in act(...)
+    await act(async () => {
+      // Assert that the button's text content matches "Registering..." when loading is true
+      const button = getByRole("button", { name: /register/i });
+      expect(button.textContent).toBe("Registering...");
 
-        // Render the Register component
-        const { getByPlaceholderText, getByRole, getByText } = render(
-          <Router>
-            <Register />
-          </Router>
-        );
-
-        // Simulate input events to enter matching passwords
-        fireEvent.change(getByPlaceholderText("Email address"), {
-          target: { value: "test@example.com" },
-        });
-        fireEvent.change(getByPlaceholderText("Password"), {
-          target: { value: "password" },
-        });
-        fireEvent.change(getByPlaceholderText("Confirm your password"), {
-          target: { value: "password" },
-        });
-
-        // Simulate form submission
-          fireEvent.click(getByRole("button", { name: /register/i }));
-
-         // Wrap assertions that involve state updates in act(...)
-             await act(async () => {
-               // Assert that the button's text content matches "Registering..." when loading is true
-               const button = getByRole("button", { name: /register/i });
-               expect(button.textContent).toBe("Registering...");
-
-               // Assert that the user is navigated to the homepage
-               expect(window.location.pathname).toBe("/");
-             });
-        });
+      // Assert that the user is navigated to the homepage
+      expect(window.location.pathname).toBe("/");
     });
+  });
+});
