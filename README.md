@@ -2,7 +2,7 @@
 
 <p align="center">
   <br/>
-  <a href="https://app.shopwithcoshop.com">CoShop</a> is a web app designed to make shopping simpler by effortlessly collaborating with friends and family, making list sharing a breeze. Stay organized, save time, and simplify your shopping routine, all in app!
+  <a href="https://app.shopwithcoshop.com">CoShop</a> is a web app designed to make shopping simpler by effortlessly collaborating with friends and family, making list sharing a breeze. Stay organized, save time, and simplify your shopping routine, all in one app!
   <br/><br/>
 </p>
 

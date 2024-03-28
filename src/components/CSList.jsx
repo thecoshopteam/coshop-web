@@ -14,14 +14,14 @@ const CSList = () => {
   const [items, setItems] = useState(storedItems);
   const [newItemTitle, setNewItemTitle] = useState("");
 
-  const handleCheckboxToggle = (id) => {
-    const updatedList = items.map((item) =>
+  const handleCheckboxToggle = id => {
+    const updatedList = items.map(item =>
       item.id === id ? { ...item, isBought: !item.isBought } : item,
     );
     updateList(updatedList);
   };
 
-  const handleAddItem = (event) => {
+  const handleAddItem = event => {
     event.preventDefault();
     if (newItemTitle.trim() !== "") {
       // Convert both the new item title and existing item titles to lowercase and remove spaces
@@ -30,7 +30,7 @@ const CSList = () => {
         .toLowerCase()
         .replace(/\s/g, "");
       const existingItem = items.find(
-        (item) =>
+        item =>
           item.title.trim().toLowerCase().replace(/\s/g, "") ===
           newItemTitleNormalized,
       );
@@ -56,12 +56,12 @@ const CSList = () => {
     }
   };
 
-  const handleDeleteItem = (id) => {
-    const updatedList = items.filter((item) => item.id !== id);
+  const handleDeleteItem = id => {
+    const updatedList = items.filter(item => item.id !== id);
     updateList(updatedList);
   };
 
-  const updateList = (updatedList) => {
+  const updateList = updatedList => {
     setItems(updatedList);
     localStorage.setItem("items", JSON.stringify(updatedList));
   };
@@ -73,14 +73,14 @@ const CSList = () => {
           type="text"
           placeholder="Enter item title"
           value={newItemTitle}
-          onChange={(e) => setNewItemTitle(e.target.value)}
+          onChange={e => setNewItemTitle(e.target.value)}
         />
         <Button type="submit" variant="contained" endIcon={<AddIcon />}>
           Add Item
         </Button>
       </form>
       <List className="w-full max-w-md">
-        {items.map((item) => (
+        {items.map(item => (
           <CSListItem
             key={item.id}
             handleCheckboxToggle={() => handleCheckboxToggle(item.id)}
