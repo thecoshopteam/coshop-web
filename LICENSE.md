@@ -34,6 +34,6 @@ In no event shall CoShop be liable for any damages, including without limitation
 
 ## Contact Information
 
-For inquiries regarding this license, please contact CoShop at [hello@shopwithcoshop.com].
+For inquiries regarding this license, please contact the CoShop team at [hello@shopwithcoshop.com](hello@shopwithcoshop.com).
 
 © 2024 CoShop. All rights reserved.
