@@ -38,7 +38,12 @@ const CSListItem = ({
       }
       disablePadding
     >
-      <ListItemButton role={undefined} aria-label="checkbox" dense onClick={handleCheckboxToggle}>
+      <ListItemButton
+        role={undefined}
+        aria-label="checkbox"
+        dense
+        onClick={handleCheckboxToggle}
+      >
         <ListItemIcon>
           <Checkbox
             edge="start"

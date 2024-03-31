@@ -17,6 +17,7 @@ import Login from "./pages/Login";
 import List from "./pages/List";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import AboutUs from "./pages/AboutUs";
 
 // Theme imports
 import { ThemeProvider } from "@mui/material";
@@ -60,6 +61,16 @@ const App = () => {
                 <ProtectedRoute>
                   <AppLayout>
                     <Profile />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/about-us"
+              element={
+                <ProtectedRoute>
+                  <AppLayout>
+                    <AboutUs />
                   </AppLayout>
                 </ProtectedRoute>
               }

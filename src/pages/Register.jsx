@@ -18,7 +18,7 @@ const Register = () => {
   const { registerUser } = UserAuth();
   const navigate = useNavigate();
 
-  const handleRegistration = async (event) => {
+  const handleRegistration = async event => {
     event.preventDefault();
     if (password !== passwordConfirmation) {
       setErrorMessage("Passwords do not match");
@@ -47,21 +47,21 @@ const Register = () => {
           name="email"
           type="email"
           placeholder="Email address"
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={event => setEmail(event.target.value)}
           required
         />
         <Input
           name="password"
           type="password"
           placeholder="Password"
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={event => setPassword(event.target.value)}
           required
         />
         <Input
           name="passwordConfirmation"
           type="password"
           placeholder="Confirm your password"
-          onChange={(event) => setPasswordConfirmation(event.target.value)}
+          onChange={event => setPasswordConfirmation(event.target.value)}
           required
         />
         {errorMessage && (

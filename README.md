@@ -2,7 +2,7 @@
 
 <p align="center">
   <br/>
-  <a href="https://app.shopwithcoshop.com">CoShop</a> is a web app designed to make shopping simpler by effortlessly collaborating with friends and family, making list sharing a breeze. Stay organized, save time, and simplify your shopping routine, all in app!
+  <a href="https://app.shopwithcoshop.com">CoShop</a> is a web app designed to make shopping simpler by effortlessly collaborating with friends and family, making list sharing a breeze. Stay organized, save time, and simplify your shopping routine, all in one app!
   <br/><br/>
 </p>
 
@@ -67,7 +67,7 @@ Before running the website, you'll need to perform the following configuration s
 
 1. Create a `.env` file in the root of the project.
 
-2. Paste the received variables into the `.env` file.
+2. Paste the variables you received upon joining the team into the `.env` file. If you did not receive them, please [contact](#contact) either Julian or Amna.
 
 #### Running the Website
 
@@ -82,49 +82,57 @@ npm run dev
 
 We use a pre-commit hook to handle code formatting using Husky. This ensures consistent and clean code. Before making a commit, the pre-commit hook will run automatically.
 
+If at any point you want to manually run the formatting command, use the following:
+
+```bash
+# Format all files except those listed in .prettierignore
+npm run format
+```
+
 #### Branching Strategy
 
 1. Main Branch (`main`):
 
    - Represents the stable and latest production-ready code.
-   - Code from `staging` is merged into "main" after thorough testing and validation.
+   - Code from `staging` is merged into `main` with a PR after thorough testing and validation.
 
 2. Staging Branch (`staging`):
 
    - Serves as a staging environment for pre-release testing.
-   - Code from `development` is merged into `staging` for broader testing and verification before reaching the main branch.
+   - Code from `feature` or `bug-fix` branches is merged into `staging` for broader testing and verification before reaching the main branch.
    - This branch is configured with a [custom URL](https://staging.app.shopwithcoshop.com/).
 
-3. Development Branch (`development`):
+3. Feature Branches (`feature/your-feature`):
 
-   - Acts as an integration branch where `feature` branches and `bug fix` branches are merged to ensure they work well together.
-   - Provides a stable environment for ongoing development.
-   - Allows for continuous integration and testing of features and bug fixes.
-
-4. Feature Branches (`feature/your-feature`):
-
-   - Created from `development` for developing new features.
+   - Created from `main` for developing new features.
    - Isolated work on a specific feature or enhancement.
-   - Merged back into `development` after completion and testing.
+   - Merged into `staging` with a PR after completion for testing.
 
-5. Bug Fix Branches (`bug-fix/your-bug-fix`):
-   - Created from `development` for addressing bugs or issues.
+4. Bug Fix Branches (`bug-fix/your-bug-fix`):
+   - Created from `main` for addressing bugs or issues.
    - Isolated work on a specific bug fix.
-     -Merged back into `development` after completion and testing.
+   - Merged into `staging` with a PR after completion for testing.
 
 #### Workflow Example
 
-1. Create a new branch for your feature or bug fix:
+1. Pull the latest changes from the main branch to ensure you're up to date:
+
+   ```bash
+   git checkout main
+   git pull origin main
+   ```
+
+2. Create a new branch for your feature or bug fix:
 
    ```bash
    # Feature example
-   git checkout -b feature/your-feature dev
+   git checkout -b feature/your-feature main
 
    # Bug fix example
-   git checkout -b bug-fix/your-bug-fix dev
+   git checkout -b bug-fix/your-bug-fix main
    ```
 
-2. Make your changes, test them thoroughly locally, and then commit your changes to your feature branch:
+3. Make your changes, test them thoroughly locally, and then commit your changes to your feature branch:
 
    ```bash
    # Feature example
@@ -137,14 +145,22 @@ We use a pre-commit hook to handle code formatting using Husky. This ensures con
    git commit -m "Description of your bug fix"
    git push origin bug-fix/your-bug-fix
    ```
-   
-3. For additional testing, merge your `feature` branch into the `staging` branch.
 
-4. Test your changes in the staging environment with the [custom URL](https://staging.app.shopwithcoshop.com/).
+   For consistency purposes, please be sure to follow the branch format listed above.
 
-5. If everything tests correctly in the staging site, create a pull request from `staging` to `main` on GitHub.
+4. For additional testing, merge your `feature` branch into the `staging` branch.
 
-6. After final review and approval from your lead, they will merge your changes into the `main` branch for production releases!
+5. Test your changes in the staging environment with the [custom URL](https://staging.app.shopwithcoshop.com/).
+
+6. If everything tests correctly in the staging site, create a detailed pull request (PR) from `staging` to `main` on GitHub, providing information about your changes:
+
+   - Include a descriptive title.
+   - Add an appropriate label to categorize the PR.
+   - Summarize the changes made and the purpose of the branch.
+   - Mention any relevant issue numbers.
+   - Tag either Julian or Amna for review.
+
+7. After final review and approval from your either Julian or Amna, they will merge your changes into the `main` branch for production releases!
 
 By following this workflow, we ensure that we maintain a stable `main` branch for our visitors, utilize `feature` and `bug fix` branches for an isolated environment, and conduct pre-production testing on the `staging` branch before releasing our excited new changes.
 
