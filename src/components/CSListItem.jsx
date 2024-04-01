@@ -28,6 +28,12 @@ const CSListItem = ({
     handleQuantityChange(newQuantity);
   };
 
+  const handleListItemButtonClick = (event) => {
+    if (!event.target.closest('input[type="number"]')) {
+      handleCheckboxToggle();
+    }
+  };
+
   return (
     <ListItem
       key={id}
@@ -42,7 +48,7 @@ const CSListItem = ({
         role={undefined}
         aria-label="checkbox"
         dense
-        onClick={handleCheckboxToggle}
+        onClick={handleListItemButtonClick}
       >
         <ListItemIcon>
           <Checkbox
@@ -66,6 +72,7 @@ const CSListItem = ({
           onChange={handleChange}
           label="Quantity"
           inputProps={{ min: 1 }}
+          sx={{ width: "120px" }}
         />
       </ListItemButton>
     </ListItem>
