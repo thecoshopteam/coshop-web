@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 // MUI component imports
@@ -15,23 +15,25 @@ const CSListItem = ({
   id,
   title,
   isBought,
-  quantity,
   handleCheckboxToggle,
   handleDeleteItem,
-  handleQuantityChange,
 }) => {
-  const [localQuantity, setLocalQuantity] = useState(quantity);
+  const [localQuantity, setLocalQuantity] = useState(() => {
+    return parseInt(localStorage.getItem(`quantity_${id}`), 10) || 1;
+  });
+
+  useEffect(() => {
+    localStorage.setItem(`quantity_${id}`, localQuantity.toString());
+  }, [id, localQuantity]);
 
   const handleChange = (event) => {
     const newQuantity = event.target.value;
     setLocalQuantity(newQuantity);
-    handleQuantityChange(newQuantity);
   };
 
-  const handleListItemButtonClick = (event) => {
-    if (!event.target.closest('input[type="number"]')) {
-      handleCheckboxToggle();
-    }
+  const handleQuantityFieldClick = (event) => {
+    // Prevent propagation of click events from the quantity input field
+    event.stopPropagation();
   };
 
   return (
@@ -48,7 +50,7 @@ const CSListItem = ({
         role={undefined}
         aria-label="checkbox"
         dense
-        onClick={handleListItemButtonClick}
+        onClick={handleCheckboxToggle}
       >
         <ListItemIcon>
           <Checkbox
@@ -70,6 +72,7 @@ const CSListItem = ({
           type="number"
           value={localQuantity}
           onChange={handleChange}
+          onClick={handleQuantityFieldClick} // Prevents click propagation
           label="Quantity"
           inputProps={{ min: 1 }}
           sx={{ width: "120px" }}
@@ -83,10 +86,8 @@ CSListItem.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   isBought: PropTypes.bool.isRequired,
-  quantity: PropTypes.number.isRequired,
   handleCheckboxToggle: PropTypes.func.isRequired,
   handleDeleteItem: PropTypes.func.isRequired,
-  handleQuantityChange: PropTypes.func.isRequired,
 };
 
 export default CSListItem;
