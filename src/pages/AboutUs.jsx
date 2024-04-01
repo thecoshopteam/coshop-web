@@ -27,9 +27,9 @@ const AboutUs = () => {
           <a
             target="_blank"
             style={{ color: "#007bff" }}
-            href="https://www.linkedin.com/in/your-user-name"
+            href="https://www.linkedin.com/in/mateusz-obrochta-7281722b3/"
           >
-            Member 3
+            Mateusz Obrochta
           </a>
         </li>
         <li style={{ margin: "10px 0" }}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 // MUI component imports
@@ -9,6 +9,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import TextField from "@mui/material/TextField";
 
 const CSListItem = ({
   id,
@@ -17,6 +18,24 @@ const CSListItem = ({
   handleCheckboxToggle,
   handleDeleteItem,
 }) => {
+  const [localQuantity, setLocalQuantity] = useState(() => {
+    return parseInt(localStorage.getItem(`quantity_${id}`), 10) || 1;
+  });
+
+  useEffect(() => {
+    localStorage.setItem(`quantity_${id}`, localQuantity.toString());
+  }, [id, localQuantity]);
+
+  const handleChange = event => {
+    const newQuantity = event.target.value;
+    setLocalQuantity(newQuantity);
+  };
+
+  const handleQuantityFieldClick = event => {
+    // Prevent propagation of click events from the quantity input field
+    event.stopPropagation();
+  };
+
   return (
     <ListItem
       key={id}
@@ -48,6 +67,15 @@ const CSListItem = ({
             textDecoration: isBought ? "line-through" : "none",
             color: isBought ? "gray" : "inherit",
           }}
+        />
+        <TextField
+          type="number"
+          value={localQuantity}
+          onChange={handleChange}
+          onClick={handleQuantityFieldClick} // Prevents click propagation
+          label="Quantity"
+          inputProps={{ min: 1 }}
+          sx={{ width: "120px" }}
         />
       </ListItemButton>
     </ListItem>
