@@ -45,9 +45,9 @@ const AboutUs = () => {
           <a
             target="_blank"
             style={{ color: "#007bff" }}
-            href="https://www.linkedin.com/in/your-user-name"
+            href="https://www.linkedin.com/in/ivansanchez-/"
           >
-            Member 5
+            Ivan Sanchez
           </a>
         </li>
         <li style={{ margin: "10px 0" }}>
