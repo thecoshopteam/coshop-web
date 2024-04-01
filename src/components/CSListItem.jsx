@@ -26,12 +26,12 @@ const CSListItem = ({
     localStorage.setItem(`quantity_${id}`, localQuantity.toString());
   }, [id, localQuantity]);
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const newQuantity = event.target.value;
     setLocalQuantity(newQuantity);
   };
 
-  const handleQuantityFieldClick = (event) => {
+  const handleQuantityFieldClick = event => {
     // Prevent propagation of click events from the quantity input field
     event.stopPropagation();
   };
