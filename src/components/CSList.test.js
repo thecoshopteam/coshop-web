@@ -2,7 +2,6 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import CSList from "./CSList";
 import CSListItem from "./CSListItem";
-import "@testing-library/jest-dom";
 
 describe("CRUD Operations", () => {
   let localStorageMock;
@@ -98,5 +97,88 @@ describe("CRUD Operations", () => {
         { id: 3, title: "Bread", isBought: false },
       ]),
     );
+  });
+});
+
+
+describe('handleAddItem function', () => {
+  let localStorageMock;
+
+  beforeEach(() => {
+    localStorageMock = {
+      getItem: jest.fn(() => JSON.stringify([])),
+      setItem: jest.fn(),
+      clear: jest.fn(),
+    };
+    Object.defineProperty(window, "localStorage", { value: localStorageMock });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('asks the user for confirmation and returns if canceled', () => {
+ const { getByPlaceholderText, getByText, queryByText, getAllByLabelText } =
+      render(<CSList />);
+    const input = getByPlaceholderText("Enter item title");
+    const addButton = getByText("Add Item");
+
+  // Mock window.confirm to always return false
+    const mockConfirm = jest.spyOn(window, 'confirm').mockReturnValue(false);
+
+    // Add Peanut Butter to the list as the first item
+    fireEvent.change(input, { target: { value: "Peanut Butter" } });
+    fireEvent.click(addButton);
+
+    // Add Peanut Butter as the second item
+    fireEvent.change(input, { target: { value: "Peanut Butter" } });
+
+    // Trigger the handleAddItem function
+    fireEvent.click(addButton); // Replace getButtonElement with a function that gets the button element that triggers handleAddItem
+
+    // Expect that the confirmation dialog was shown
+    expect(mockConfirm).toHaveBeenCalledWith(
+      'This item already exists in the list. Do you still want to add it?'
+    );
+
+// Mock necessary variables and functions
+    const updateList = jest.fn();
+    const setNewItemTitle = jest.fn();
+
+    // Expect that updateList and setNewItemTitle were not called
+    expect(updateList).not.toHaveBeenCalled();
+    expect(setNewItemTitle).not.toHaveBeenCalled();
+
+    // Restore the original window.confirm method
+    mockConfirm.mockRestore();
+  });
+
+  it('renders new item on the list if confirmed', () => {
+    const updateList = jest.fn(); // Mock the updateList function
+
+    const { getByPlaceholderText, getByText, queryByText, getAllByLabelText } =
+    render(<CSList updateList={updateList} />); // Pass the updateList function as a prop
+    const input = getByPlaceholderText("Enter item title");
+    const addButton = getByText("Add Item");
+
+
+    // Mock window.confirm to return true
+    const mockConfirm = jest.spyOn(window, 'confirm').mockReturnValue(true);
+
+    // Add Peanut Butter to the list as the first item
+    fireEvent.change(input, { target: { value: "Peanut Butter" } });
+    fireEvent.click(addButton);
+
+    // Add another item to the list
+    fireEvent.change(input, { target: { value: "Peanut Butter" } });
+    fireEvent.click(addButton);
+
+    // Expect that the confirmation dialog was shown for the second item
+    expect(mockConfirm).toHaveBeenCalledWith(
+      'This item already exists in the list. Do you still want to add it?'
+    );
+
+    // Restore the original window.confirm method
+    mockConfirm.mockRestore();
   });
 });
