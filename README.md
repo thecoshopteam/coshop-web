@@ -46,13 +46,13 @@ Before setting up the project, ensure that you have the following prerequisites 
 
 ### Installation
 
-[Step 1: Clone the repository]
+Step 1: Clone the repository
 
 ```bash
 git clone https://github.com/thecoshopteam/coshop-web.git
 ```
 
-[Step 2: Install dependencies]
+Step 2: Install dependencies
 
 ```bash
 cd coshop-web
