@@ -85,7 +85,9 @@ const Navbar = () => {
               <a href="/profile">
                 <MenuItem>Profile</MenuItem>
               </a>
-              <MenuItem onClick={handleClose}>Report a Bug</MenuItem>
+              <a href="mailto:hello@shopwithcoshop.com">
+                <MenuItem>Report a Bug</MenuItem>
+              </a>
               <Divider />
               <MenuItem onClick={handleSignOut}>Log Out</MenuItem>
             </Menu>
