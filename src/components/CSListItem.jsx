@@ -8,7 +8,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
+import InventoryIcon from "@mui/icons-material/Inventory";
 import TextField from "@mui/material/TextField";
 
 const CSListItem = ({
@@ -16,7 +16,7 @@ const CSListItem = ({
   title,
   isBought,
   handleCheckboxToggle,
-  handleDeleteItem,
+  handleArchiveItem,
 }) => {
   const [localQuantity, setLocalQuantity] = useState(() => {
     return parseInt(localStorage.getItem(`quantity_${id}`), 10) || 1;
@@ -40,8 +40,8 @@ const CSListItem = ({
     <ListItem
       key={id}
       secondaryAction={
-        <IconButton edge="end" aria-label="delete" onClick={handleDeleteItem}>
-          <DeleteIcon />
+        <IconButton edge="end" aria-label="delete" onClick={handleArchiveItem}>
+          <InventoryIcon />
         </IconButton>
       }
       disablePadding
@@ -87,7 +87,7 @@ CSListItem.propTypes = {
   title: PropTypes.string.isRequired,
   isBought: PropTypes.bool.isRequired,
   handleCheckboxToggle: PropTypes.func.isRequired,
-  handleDeleteItem: PropTypes.func.isRequired,
+  handleArchiveItem: PropTypes.func.isRequired,
 };
 
 export default CSListItem;
