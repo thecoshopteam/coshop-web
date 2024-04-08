@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 
 // MUI component imports
 import Input from "@mui/material/Input";
@@ -34,7 +34,7 @@ const List = () => {
       <Input
         type="text"
         value={listTitle}
-        onChange={e => handleTitleChange(e.target.value)} // Pass only the value directly
+        onChange={e => handleTitleChange(e.target.value)}
         disableUnderline={true}
         style={{ fontSize: "30px", fontWeight: 600 }}
       />

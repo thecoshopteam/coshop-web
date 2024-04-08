@@ -1,18 +1,34 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 // MUI component imports
 import List from "@mui/material/List";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 // Local component imports
 import CSListItem from "./CSListItem";
+import HistoryListItem from "./HistoryListItem";
 
 const CSList = () => {
-  const storedItems = JSON.parse(localStorage.getItem("items")) || [];
-  const [items, setItems] = useState(storedItems);
+  // Initialize state for items and history
+  const [items, setItems] = useState(
+    JSON.parse(localStorage.getItem("items")) || [],
+  );
+  const [history, setHistory] = useState(
+    JSON.parse(localStorage.getItem("history")) || [],
+  );
   const [newItemTitle, setNewItemTitle] = useState("");
+  const [showHistory, setShowHistory] = useState(
+    localStorage.getItem("showHistory") === "true" || false,
+  );
+
+  const updateShowHistory = value => {
+    setShowHistory(value);
+    localStorage.setItem("showHistory", value);
+  };
 
   const handleCheckboxToggle = id => {
     const updatedList = items.map(item =>
@@ -46,24 +62,52 @@ const CSList = () => {
         }
       }
       const newItem = {
-        id: items.length + 1,
+        id: Date.now(), // Use a timestamp for a unique ID
         title: newItemTitle,
         isBought: false,
       };
-      const updatedList = [...items, newItem];
+      const updatedList = [newItem, ...items];
       updateList(updatedList);
       setNewItemTitle("");
     }
   };
 
-  const handleDeleteItem = id => {
-    const updatedList = items.filter(item => item.id !== id);
-    updateList(updatedList);
+  const handleArchiveItem = id => {
+    const itemToArchive = items.find(item => item.id === id);
+    if (itemToArchive) {
+      // Remove from items list
+      const updatedList = items.filter(item => item.id !== id);
+      updateList(updatedList);
+
+      // Add to history list
+      const updatedHistoryList = [itemToArchive, ...history];
+      setHistory(updatedHistoryList);
+      localStorage.setItem("history", JSON.stringify(updatedHistoryList));
+    }
   };
 
   const updateList = updatedList => {
     setItems(updatedList);
     localStorage.setItem("items", JSON.stringify(updatedList));
+  };
+
+  const addItemFromHistory = id => {
+    // Find the item in history list
+    const itemToAdd = history.find(item => item.id === id);
+
+    if (itemToAdd) {
+      // Reset the isBought property to false
+      const newItemToAdd = { ...itemToAdd, isBought: false };
+
+      // Remove item from history
+      const updatedHistoryList = history.filter(item => item.id !== id);
+      setHistory(updatedHistoryList);
+      localStorage.setItem("history", JSON.stringify(updatedHistoryList));
+
+      // Add item back to main list
+      const updatedItemsList = [...items, newItemToAdd];
+      updateList(updatedItemsList);
+    }
   };
 
   return (
@@ -84,11 +128,31 @@ const CSList = () => {
           <CSListItem
             key={item.id}
             handleCheckboxToggle={() => handleCheckboxToggle(item.id)}
-            handleDeleteItem={() => handleDeleteItem(item.id)}
+            handleArchiveItem={() => handleArchiveItem(item.id)}
             {...item}
           />
         ))}
       </List>
+      <Button
+        onClick={() => updateShowHistory(!showHistory)}
+        variant="text"
+        endIcon={showHistory ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+      >
+        {showHistory ? "Hide Archived Items" : "Show Archived Items"}
+      </Button>
+      {showHistory && (
+        <>
+          <List className="w-full max-w-md">
+            {history.map(item => (
+              <HistoryListItem
+                key={item.id}
+                handleAddItem={() => addItemFromHistory(item.id)}
+                {...item}
+              />
+            ))}
+          </List>
+        </>
+      )}
     </div>
   );
 };
