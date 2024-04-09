@@ -100,8 +100,7 @@ describe("CRUD Operations", () => {
   });
 });
 
-
-describe('handleAddItem function', () => {
+describe("handleAddItem function", () => {
   let localStorageMock;
 
   beforeEach(() => {
@@ -117,14 +116,14 @@ describe('handleAddItem function', () => {
     jest.clearAllMocks();
   });
 
-  it('asks the user for confirmation and returns if canceled', () => {
- const { getByPlaceholderText, getByText, queryByText, getAllByLabelText } =
+  it("asks the user for confirmation and returns if canceled", () => {
+    const { getByPlaceholderText, getByText, queryByText, getAllByLabelText } =
       render(<CSList />);
     const input = getByPlaceholderText("Enter item title");
     const addButton = getByText("Add Item");
 
-  // Mock window.confirm to always return false
-    const mockConfirm = jest.spyOn(window, 'confirm').mockReturnValue(false);
+    // Mock window.confirm to always return false
+    const mockConfirm = jest.spyOn(window, "confirm").mockReturnValue(false);
 
     // Add Peanut Butter to the list as the first item
     fireEvent.change(input, { target: { value: "Peanut Butter" } });
@@ -138,10 +137,10 @@ describe('handleAddItem function', () => {
 
     // Expect that the confirmation dialog was shown
     expect(mockConfirm).toHaveBeenCalledWith(
-      'This item already exists in the list. Do you still want to add it?'
+      "This item already exists in the list. Do you still want to add it?",
     );
 
-// Mock necessary variables and functions
+    // Mock necessary variables and functions
     const updateList = jest.fn();
     const setNewItemTitle = jest.fn();
 
@@ -153,17 +152,16 @@ describe('handleAddItem function', () => {
     mockConfirm.mockRestore();
   });
 
-  it('renders new item on the list if confirmed', () => {
+  it("renders new item on the list if confirmed", () => {
     const updateList = jest.fn(); // Mock the updateList function
 
     const { getByPlaceholderText, getByText, queryByText, getAllByLabelText } =
-    render(<CSList updateList={updateList} />); // Pass the updateList function as a prop
+      render(<CSList updateList={updateList} />); // Pass the updateList function as a prop
     const input = getByPlaceholderText("Enter item title");
     const addButton = getByText("Add Item");
 
-
     // Mock window.confirm to return true
-    const mockConfirm = jest.spyOn(window, 'confirm').mockReturnValue(true);
+    const mockConfirm = jest.spyOn(window, "confirm").mockReturnValue(true);
 
     // Add Peanut Butter to the list as the first item
     fireEvent.change(input, { target: { value: "Peanut Butter" } });
@@ -175,7 +173,7 @@ describe('handleAddItem function', () => {
 
     // Expect that the confirmation dialog was shown for the second item
     expect(mockConfirm).toHaveBeenCalledWith(
-      'This item already exists in the list. Do you still want to add it?'
+      "This item already exists in the list. Do you still want to add it?",
     );
 
     // Restore the original window.confirm method
