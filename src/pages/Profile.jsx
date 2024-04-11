@@ -86,7 +86,7 @@ const Profile = () => {
               onChange={e => setPassword(e.target.value)}
               disabled={passwordLoading}
             />
-            <Button type="submit" variant="outlined" disabled={passwordLoading}>
+            <Button type="submit" variant="outlined" disabled={passwordLoading} data-testid="update-password-button">
               {passwordLoading ? "Updating..." : "Update"}
             </Button>
           </div>
