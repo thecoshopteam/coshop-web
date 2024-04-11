@@ -81,6 +81,13 @@ const CSList = () => {
     document.body.removeChild(a);
   }
 
+  const handleUpdateItemTitle = (id, updatedItemTitle) => {
+    const updatedList = items.map(item =>
+      item.id === id ? { ...item, title: updatedItemTitle } : item,
+    );
+    updateList(updatedList);
+  };
+
   const handleCheckboxToggle = id => {
     const updatedList = items.map(item =>
       item.id === id ? { ...item, isBought: !item.isBought } : item,
@@ -187,6 +194,9 @@ const CSList = () => {
             key={item.id}
             handleCheckboxToggle={() => handleCheckboxToggle(item.id)}
             handleArchiveItem={() => handleArchiveItem(item.id)}
+            handleUpdateItemTitle={updatedItemTitle =>
+              handleUpdateItemTitle(item.id, updatedItemTitle)
+            }
             {...item}
           />
         ))}
