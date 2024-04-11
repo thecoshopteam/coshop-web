@@ -9,7 +9,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
-
 // Local component imports
 import CSListItem from "./CSListItem";
 import HistoryListItem from "./HistoryListItem";
@@ -181,7 +180,6 @@ const CSList = () => {
           variant="contained"
           startIcon={<CloudDownloadIcon />}
         ></Button>
-
       </form>
       <List className="w-full max-w-md">
         {items.map(item => (
