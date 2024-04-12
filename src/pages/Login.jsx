@@ -8,6 +8,8 @@ import { UserAuth } from "../context/AuthContext";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
 
+
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +35,16 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div style ={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+    <div style ={{ marginBottom: '100px'}}><h1 className="mb-10 text-center text-6xl font-bold text-blue-500">
+        CoShop
+      </h1></div>
+    <div style ={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: '10px' }}>
+    <div style ={{ marginRight: '50px'}}>
+    <h1 className="mb-10 text-center text-3xl font-bold text-blue-500">Shopping made simpler.</h1>
+    <h2 style = {{width: "200px", wordWrap: "break-word", textAlign: "left"}} className="mb-10 text-center text-1xl text-black">By effortlessly collaborating with friends and family, making list sharing a breeze. Stay organized, save time, and simplify your shopping routine, all in one app!</h2>
+    </div>
+    <div style ={{ marginLeft: '50px'}}>
       <h1 className="mb-10 text-center text-3xl font-bold">
         Log in to your account
       </h1>
@@ -68,6 +79,8 @@ const Login = () => {
           here
         </Link>
       </p>
+    </div>
+    </div>
     </div>
   );
 };

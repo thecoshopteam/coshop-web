@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState} from "react";
 
 // MUI component imports
 import List from "@mui/material/List";
@@ -7,12 +7,13 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
 // Local component imports
 import CSListItem from "./CSListItem";
 import HistoryListItem from "./HistoryListItem";
 
-const CSList = () => {
+const CSList = ({ updateRemainingItemsCount, updateTotalItemsCount }) => {
   // Initialize state for items and history
   const [items, setItems] = useState(
     JSON.parse(localStorage.getItem("items")) || [],
@@ -30,12 +31,56 @@ const CSList = () => {
     localStorage.setItem("showHistory", value);
   };
 
-  const handleUpdateItemTitle = (id, updatedItemTitle) => {
-    const updatedList = items.map(item =>
-      item.id === id ? { ...item, title: updatedItemTitle } : item,
-    );
-    updateList(updatedList);
-  };
+  function shoppingListPrinter() {
+    const canvas = document.createElement('canvas')
+    canvas.width = 360;
+    canvas.height = 800;
+
+    const ctx = canvas.getContext('2d')
+    ctx.fillStyle = "white";
+    ctx.fillRect(0,0,canvas.width,canvas.height)
+
+    const title = "Shopping List" //find the list name for this
+    const titleFontSize = 32;
+    ctx.font = titleFontSize + "px Arial";
+    ctx.fillStyle = "blue";
+    ctx.fillText(title, 10, titleFontSize)
+
+    const items = JSON.parse(localStorage.getItem("items") || '[]');
+
+    const itemFontSize = 24;
+    ctx.font = itemFontSize + "px Arial";
+    let y = titleFontSize * 2 + 20; // Start below the title with some margin
+    ctx.fillStyle = "black";
+    items.forEach(item => {
+        ctx.fillText("- " +item.title, 10, y);
+        y += itemFontSize * 1.5;
+    });
+    // Adjust canvas height to fit content if necessary
+    if (y > canvas.height) {
+        canvas.height = y;
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "blue";
+        ctx.font = titleFontSize + "px Arial";
+        ctx.fillText(title, 10, titleFontSize);
+        ctx.font = itemFontSize + "px Arial";
+        y = titleFontSize * 2 + 20; 
+        items.forEach(item => { 
+            ctx.fillText("- " +item.title, 10, y);
+            y += itemFontSize * 1.5;
+        });
+    }
+
+    const dataUrl = canvas.toDataURL("image/png");
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = 'ShoppingList.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+}
 
   const handleCheckboxToggle = id => {
     const updatedList = items.map(item =>
@@ -96,7 +141,15 @@ const CSList = () => {
   const updateList = updatedList => {
     setItems(updatedList);
     localStorage.setItem("items", JSON.stringify(updatedList));
-  };
+
+ // Update the counts after updating the list
+    const remainingItemsCount = updatedList.filter(item => !item.isBought).length;
+    const totalItemsCount = updatedList.length;
+    updateRemainingItemsCount(remainingItemsCount);
+    localStorage.setItem("remainingItemsCount", remainingItemsCount);
+    updateTotalItemsCount(totalItemsCount);
+    localStorage.setItem("totalItemsCount", totalItemsCount);
+ };
 
   const addItemFromHistory = id => {
     // Find the item in history list
@@ -128,6 +181,9 @@ const CSList = () => {
         />
         <Button type="submit" variant="contained" endIcon={<AddIcon />}>
           Add Item
+        </Button>
+        <Button onClick={() => shoppingListPrinter()} type="submit" variant="contained" startIcon={<CloudDownloadIcon/>}
+        >
         </Button>
       </form>
       <List className="w-full max-w-md">

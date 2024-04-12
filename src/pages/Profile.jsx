@@ -66,7 +66,12 @@ const Profile = () => {
               onChange={e => setEmail(e.target.value)}
               disabled={emailLoading}
             />
-            <Button type="submit" variant="outlined" disabled={emailLoading} data-testid="update-email-button">
+            <Button
+              type="submit"
+              variant="outlined"
+              disabled={emailLoading}
+              data-testid="update-email-button"
+            >
               {emailLoading ? "Updating..." : "Update"}
             </Button>
           </div>
