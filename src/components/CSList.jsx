@@ -126,46 +126,51 @@ const CSList = () => {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    const title = "Shopping List"; //find the list name for this
+    // Draw the title
+    const title = "Shopping List";
     const titleFontSize = 32;
-    ctx.font = titleFontSize + "px Arial";
+    ctx.font = `${titleFontSize}px Inter`;
     ctx.fillStyle = "blue";
     ctx.fillText(title, 10, titleFontSize);
 
+    // Draw the items with Inter font
     const items = JSON.parse(localStorage.getItem("items") || "[]");
-
     const itemFontSize = 24;
-    ctx.font = itemFontSize + "px Arial";
-    let y = titleFontSize * 2 + 20; // Start below the title with some margin
+    ctx.font = `${itemFontSize}px Inter`; // Set the font to Inter
+    let y = titleFontSize * 2 + 20;
     ctx.fillStyle = "black";
     items.forEach(item => {
-      ctx.fillText("- " + item.title, 10, y);
-      y += itemFontSize * 1.5;
-    });
-    // Adjust canvas height to fit content if necessary
-    if (y > canvas.height) {
-      canvas.height = y;
-      ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "blue";
-      ctx.font = titleFontSize + "px Arial";
-      ctx.fillText(title, 10, titleFontSize);
-      ctx.font = itemFontSize + "px Arial";
-      y = titleFontSize * 2 + 20;
-      items.forEach(item => {
         ctx.fillText("- " + item.title, 10, y);
         y += itemFontSize * 1.5;
-      });
-    }
+    });
 
-    const dataUrl = canvas.toDataURL("image/png");
-    const a = document.createElement("a");
-    a.href = dataUrl;
-    a.download = "ShoppingList.png";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
+    // Load the logo image
+    const logo = new Image();
+    logo.src = '/coshop.png'; // Replace 'path/to/your/logo.png' with the actual path to your logo image
+    logo.onload = function() {
+        // Draw the logo onto the canvas at the center
+        const logoWidth = 160;
+        const logoHeight = 210;
+        const logoX = (canvas.width - logoWidth) / 2; // Center horizontally
+        const logoY = (canvas.height - logoHeight) / 2; // Center vertically
+        ctx.globalAlpha = 0.5; // Set the opacity of the logo (0.5 for 50% transparency)
+        ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight); // Draw the logo
+        ctx.globalAlpha = 1.0; // Reset the global alpha to 1
+
+        // Convert the canvas to data URL and initiate download
+        const dataUrl = canvas.toDataURL("image/png");
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = "ShoppingList.png";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    };
+}
+
+
+  
+  
   return (
     <div>
       <form className="my-8 flex items-center gap-4" onSubmit={handleAddItem}>
