@@ -29,6 +29,10 @@ const List = () => {
     day: "numeric", // numeric day
   });
 
+  // State to hold the counts
+  const [remainingItemsCount, setRemainingItemsCount] = useState(0);
+  const [totalItemsCount, setTotalItemsCount] = useState(0);
+
   return (
     <div className="p-5 lg:p-10">
       <Input
@@ -39,7 +43,13 @@ const List = () => {
         style={{ fontSize: "30px", fontWeight: 600 }}
       />
       <h2 className="text-xl font-medium text-gray-500">{formattedDate}</h2>
-      <CSList />
+      <div>
+              <p>List items remaining: {remainingItemsCount}/{totalItemsCount}</p>
+      </div>
+      <CSList
+        updateRemainingItemsCount={setRemainingItemsCount}
+        updateTotalItemsCount={setTotalItemsCount}
+      />
     </div>
   );
 };

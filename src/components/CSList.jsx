@@ -26,6 +26,14 @@ const CSList = () => {
     localStorage.getItem("showHistory") === "true" || false,
   );
 
+// Function to update remaining and total item counts
+  const updateItemCounts = () => {
+    const remainingItemsCount = items.filter(item => !item.isBought).length;
+    const totalItemsCount = items.length;
+    updateRemainingItemsCount(remainingItemsCount);
+    updateTotalItemsCount(totalItemsCount);
+  };
+
   const updateShowHistory = value => {
     setShowHistory(value);
     localStorage.setItem("showHistory", value);
@@ -81,7 +89,6 @@ const CSList = () => {
     document.body.removeChild(a);
 
 }
-
 
   const handleCheckboxToggle = id => {
     const updatedList = items.map(item =>
@@ -142,6 +149,7 @@ const CSList = () => {
   const updateList = updatedList => {
     setItems(updatedList);
     localStorage.setItem("items", JSON.stringify(updatedList));
+    updateItemCounts();
   };
 
   const addItemFromHistory = id => {
