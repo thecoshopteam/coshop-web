@@ -13,7 +13,7 @@ import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import CSListItem from "./CSListItem";
 import HistoryListItem from "./HistoryListItem";
 
-const CSList = () => {
+const CSList = ({ updateRemainingItemsCount, updateTotalItemsCount }) => {
   // Initialize state for items and history
   const [items, setItems] = useState(
     JSON.parse(localStorage.getItem("items")) || [],
@@ -25,14 +25,6 @@ const CSList = () => {
   const [showHistory, setShowHistory] = useState(
     localStorage.getItem("showHistory") === "true" || false,
   );
-
-// Function to update remaining and total item counts
-  const updateItemCounts = () => {
-    const remainingItemsCount = items.filter(item => !item.isBought).length;
-    const totalItemsCount = items.length;
-    updateRemainingItemsCount(remainingItemsCount);
-    updateTotalItemsCount(totalItemsCount);
-  };
 
   const updateShowHistory = value => {
     setShowHistory(value);
@@ -149,8 +141,12 @@ const CSList = () => {
   const updateList = updatedList => {
     setItems(updatedList);
     localStorage.setItem("items", JSON.stringify(updatedList));
-    updateItemCounts();
-  };
+
+ // Update the counts after updating the list
+    const remainingItemsCount = updatedList.filter(item => !item.isBought).length;
+    const totalItemsCount = updatedList.length;
+    updateRemainingItemsCount(remainingItemsCount);
+    updateTotalItemsCount(totalItemsCount);  };
 
   const addItemFromHistory = id => {
     // Find the item in history list
