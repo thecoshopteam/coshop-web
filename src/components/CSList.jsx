@@ -146,7 +146,10 @@ const CSList = ({ updateRemainingItemsCount, updateTotalItemsCount }) => {
     const remainingItemsCount = updatedList.filter(item => !item.isBought).length;
     const totalItemsCount = updatedList.length;
     updateRemainingItemsCount(remainingItemsCount);
-    updateTotalItemsCount(totalItemsCount);  };
+    localStorage.setItem("remainingItemsCount", remainingItemsCount);
+    updateTotalItemsCount(totalItemsCount);
+    localStorage.setItem("totalItemsCount", totalItemsCount);
+ };
 
   const addItemFromHistory = id => {
     // Find the item in history list
