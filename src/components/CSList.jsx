@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 // Local component imports
 import CSListItem from "./CSListItem";
 import HistoryListItem from "./HistoryListItem";
@@ -117,6 +117,60 @@ const CSList = () => {
     }
   };
 
+  function shoppingListPrinter() {
+    const canvas = document.createElement("canvas");
+    canvas.width = 360;
+    canvas.height = 800;
+
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw the title
+    const title = "Shopping List";
+    const titleFontSize = 32;
+    ctx.font = `${titleFontSize}px Inter`;
+    ctx.fillStyle = "blue";
+    ctx.fillText(title, 10, titleFontSize);
+
+    // Draw the items with Inter font
+    const items = JSON.parse(localStorage.getItem("items") || "[]");
+    const itemFontSize = 24;
+    ctx.font = `${itemFontSize}px Inter`; // Set the font to Inter
+    let y = titleFontSize * 2 + 20;
+    ctx.fillStyle = "black";
+    items.forEach(item => {
+        ctx.fillText("- " + item.title, 10, y);
+        y += itemFontSize * 1.5;
+    });
+
+    // Load the logo image
+    const logo = new Image();
+    logo.src = '/coshop.png'; // Replace 'path/to/your/logo.png' with the actual path to your logo image
+    logo.onload = function() {
+        // Draw the logo onto the canvas at the center
+        const logoWidth = 160;
+        const logoHeight = 210;
+        const logoX = (canvas.width - logoWidth) / 2; // Center horizontally
+        const logoY = (canvas.height - logoHeight) / 2; // Center vertically
+        ctx.globalAlpha = 0.5; // Set the opacity of the logo (0.5 for 50% transparency)
+        ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight); // Draw the logo
+        ctx.globalAlpha = 1.0; // Reset the global alpha to 1
+
+        // Convert the canvas to data URL and initiate download
+        const dataUrl = canvas.toDataURL("image/png");
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = "ShoppingList.png";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    };
+}
+
+
+  
+  
   return (
     <div>
       <form className="my-8 flex items-center gap-4" onSubmit={handleAddItem}>
@@ -129,6 +183,12 @@ const CSList = () => {
         <Button type="submit" variant="contained" endIcon={<AddIcon />}>
           Add Item
         </Button>
+        <Button
+          onClick={() => shoppingListPrinter()}
+          type="submit"
+          variant="contained"
+          startIcon={<CloudDownloadIcon />}
+        ></Button>
       </form>
       <List className="w-full max-w-md">
         {items.map(item => (
