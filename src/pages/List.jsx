@@ -20,22 +20,24 @@ const List = () => {
   });
 
   // Handler for changing the list title
-  const handleTitleChange = (newValue) => {
+  const handleTitleChange = newValue => {
     setListTitle(newValue);
     // Update local storage directly within the onChange event
     localStorage.setItem("listTitle", newValue);
   };
 
   // Handler for changing the due date
-  const handleDueDateChange = (newDueDate) => {
+  const handleDueDateChange = newDueDate => {
     setDueDate(newDueDate);
     // Update local storage with the new due date
     localStorage.setItem("dueDate", newDueDate.toISOString());
   };
 
   // Handler for editing the due date
-  const handleEditDueDate = (event) => {
-    const newDueDate = event.target.value ? new Date(event.target.value) : new Date(); // If the input is empty, set it to the current date
+  const handleEditDueDate = event => {
+    const newDueDate = event.target.value
+      ? new Date(event.target.value)
+      : new Date(); // If the input is empty, set it to the current date
     setDueDate(newDueDate);
     localStorage.setItem("dueDate", newDueDate.toISOString());
   };
@@ -55,12 +57,15 @@ const List = () => {
       <Input
         type="text"
         value={listTitle}
-        onChange={(e) => handleTitleChange(e.target.value)}
+        onChange={e => handleTitleChange(e.target.value)}
         disableUnderline={true}
         style={{ fontSize: "30px", fontWeight: 600 }}
       />
       <div className="mt-3 flex items-center">
-        <label className="text-lg font-medium text-gray-500 mr-2" htmlFor="dueDateInput">
+        <label
+          className="mr-2 text-lg font-medium text-gray-500"
+          htmlFor="dueDateInput"
+        >
           Due Date:
         </label>
         <input
