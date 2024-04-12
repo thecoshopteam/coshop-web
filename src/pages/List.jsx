@@ -1,9 +1,5 @@
-import { useState } from "react";
-
-// MUI component imports
+import { useState, useEffect } from "react";
 import Input from "@mui/material/Input";
-
-// Local component imports
 import CSList from "../components/CSList";
 
 const List = () => {
@@ -13,12 +9,8 @@ const List = () => {
     return savedTitle || "Untitled List";
   });
 
-  // Handler for changing the list title
-  const handleTitleChange = newValue => {
-    setListTitle(newValue);
-    // Update local storage directly within the onChange event
-    localStorage.setItem("listTitle", newValue);
-  };
+  // Initialize dueDate state and retrieve it from localStorage
+  const [dueDate, setDueDate] = useState(() => localStorage.getItem("dueDate") || "");
 
   // Get the current date
   const currentDate = new Date();
@@ -29,31 +21,38 @@ const List = () => {
     day: "numeric", // numeric day
   });
 
-  // State to hold the counts
-  const [remainingItemsCount, setRemainingItemsCount] = useState(
-      parseInt(localStorage.getItem("remainingItemsCount")) || 0
-    );
-    const [totalItemsCount, setTotalItemsCount] = useState(
-      parseInt(localStorage.getItem("totalItemsCount")) || 0
-    );
+  // Handler for changing the list title
+  const handleTitleChange = (newValue) => {
+    setListTitle(newValue);
+    // Update local storage directly within the onChange event
+    localStorage.setItem("listTitle", newValue);
+  };
+
+  // Handler for changing the due date and storing it in localStorage
+  const handleDueDateChange = (newValue) => {
+    setDueDate(newValue);
+    localStorage.setItem("dueDate", newValue);
+  };
 
   return (
     <div className="p-5 lg:p-10">
+      <h2 className="text-xl font-medium text-gray-500">{formattedDate}</h2>
       <Input
         type="text"
         value={listTitle}
-        onChange={e => handleTitleChange(e.target.value)}
+        onChange={(e) => handleTitleChange(e.target.value)}
         disableUnderline={true}
         style={{ fontSize: "30px", fontWeight: 600 }}
       />
-      <h2 className="text-xl font-medium text-gray-500">{formattedDate}</h2>
-      <div>
-              <p>List items remaining: {remainingItemsCount}/{totalItemsCount}</p>
+      <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
+        <span style={{ marginRight: "10px" }}>Due Date:</span>
+        <Input
+          type="date"
+          value={dueDate}
+          onChange={(e) => handleDueDateChange(e.target.value)}
+        />
       </div>
-      <CSList
-        updateRemainingItemsCount={setRemainingItemsCount}
-        updateTotalItemsCount={setTotalItemsCount}
-      />
+      <CSList dueDate={dueDate} />
     </div>
   );
 };

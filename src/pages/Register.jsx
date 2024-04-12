@@ -38,10 +38,6 @@ const Register = () => {
   };
 
   return (
-    <div style ={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-    <div style ={{ marginBottom: '100px'}}><h1 className="mb-10 text-center text-6xl font-bold text-blue-500">
-        CoShop
-      </h1></div>
     <div>
       <h1 className="mb-10 text-center text-3xl font-bold">
         Register an account
@@ -84,7 +80,6 @@ const Register = () => {
           here
         </Link>
       </p>
-    </div>
     </div>
   );
 };
