@@ -66,7 +66,12 @@ const Profile = () => {
               onChange={e => setEmail(e.target.value)}
               disabled={emailLoading}
             />
-            <Button type="submit" variant="outlined" disabled={emailLoading} data-testid="update-email-button">
+            <Button
+              type="submit"
+              variant="outlined"
+              disabled={emailLoading}
+              data-testid="update-email-button"
+            >
               {emailLoading ? "Updating..." : "Update"}
             </Button>
           </div>
@@ -86,7 +91,12 @@ const Profile = () => {
               onChange={e => setPassword(e.target.value)}
               disabled={passwordLoading}
             />
-            <Button type="submit" variant="outlined" disabled={passwordLoading} data-testid="update-password-button">
+            <Button
+              type="submit"
+              variant="outlined"
+              disabled={passwordLoading}
+              data-testid="update-password-button"
+            >
               {passwordLoading ? "Updating..." : "Update"}
             </Button>
           </div>
