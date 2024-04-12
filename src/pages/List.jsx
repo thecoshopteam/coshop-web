@@ -30,8 +30,12 @@ const List = () => {
   });
 
   // State to hold the counts
-  const [remainingItemsCount, setRemainingItemsCount] = useState(0);
-  const [totalItemsCount, setTotalItemsCount] = useState(0);
+  const [remainingItemsCount, setRemainingItemsCount] = useState(
+      parseInt(localStorage.getItem("remainingItemsCount")) || 0
+    );
+    const [totalItemsCount, setTotalItemsCount] = useState(
+      parseInt(localStorage.getItem("totalItemsCount")) || 0
+    );
 
   return (
     <div className="p-5 lg:p-10">
