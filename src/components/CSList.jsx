@@ -12,7 +12,7 @@ import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import CSListItem from "./CSListItem";
 import HistoryListItem from "./HistoryListItem";
 
-const CSList = () => {
+const CSList = ({ updateRemainingItemsCount, updateTotalItemsCount }) => {
   // Initialize state for items and history
   const [items, setItems] = useState(
     JSON.parse(localStorage.getItem("items")) || [],
@@ -96,6 +96,14 @@ const CSList = () => {
   const updateList = updatedList => {
     setItems(updatedList);
     localStorage.setItem("items", JSON.stringify(updatedList));
+
+    // Update the counts after updating the list
+    const remainingItemsCount = updatedList.filter(item => !item.isBought).length;
+    const totalItemsCount = updatedList.length;
+    updateRemainingItemsCount(remainingItemsCount);
+    localStorage.setItem("remainingItemsCount", remainingItemsCount);
+    updateTotalItemsCount(totalItemsCount);
+    localStorage.setItem("totalItemsCount", totalItemsCount);
   };
 
   const addItemFromHistory = id => {
@@ -168,9 +176,6 @@ const CSList = () => {
     };
 }
 
-
-  
-  
   return (
     <div>
       <form className="my-8 flex items-center gap-4" onSubmit={handleAddItem}>
