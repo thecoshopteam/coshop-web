@@ -42,16 +42,9 @@ const List = () => {
     parseInt(localStorage.getItem("totalItemsCount")) || 0
   );
 
-  return (
+return (
     <div className="p-5 lg:p-10">
       <h2 className="text-xl font-medium text-gray-500">{formattedDate}</h2>
-       <div>
-            <p>List items remaining: {remainingItemsCount}/{totalItemsCount}</p>
-       </div>
-       <CSList
-            updateRemainingItemsCount={setRemainingItemsCount}
-            updateTotalItemsCount={setTotalItemsCount}
-        />
       <Input
         type="text"
         value={listTitle}
@@ -67,8 +60,14 @@ const List = () => {
           onChange={(e) => handleDueDateChange(e.target.value)}
         />
       </div>
-      <CSList dueDate={dueDate} />
-    </div>
+      <div>
+              <p>List items remaining: {remainingItemsCount}/{totalItemsCount}</p>
+            </div>
+                  <CSList
+                      updateRemainingItemsCount={setRemainingItemsCount}
+                      updateTotalItemsCount={setTotalItemsCount}
+                  />
+          </div>
   );
 };
 
