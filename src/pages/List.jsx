@@ -34,7 +34,15 @@ const List = () => {
     localStorage.setItem("dueDate", newValue);
   };
 
-  return (
+  // State to hold the counts
+  const [remainingItemsCount, setRemainingItemsCount] = useState(
+    parseInt(localStorage.getItem("remainingItemsCount")) || 0
+  );
+  const [totalItemsCount, setTotalItemsCount] = useState(
+    parseInt(localStorage.getItem("totalItemsCount")) || 0
+  );
+
+return (
     <div className="p-5 lg:p-10">
       <h2 className="text-xl font-medium text-gray-500">{formattedDate}</h2>
       <Input
@@ -52,8 +60,14 @@ const List = () => {
           onChange={(e) => handleDueDateChange(e.target.value)}
         />
       </div>
-      <CSList dueDate={dueDate} />
-    </div>
+      <div>
+              <p>List items remaining: {remainingItemsCount}/{totalItemsCount}</p>
+            </div>
+                  <CSList
+                      updateRemainingItemsCount={setRemainingItemsCount}
+                      updateTotalItemsCount={setTotalItemsCount}
+                  />
+          </div>
   );
 };
 
