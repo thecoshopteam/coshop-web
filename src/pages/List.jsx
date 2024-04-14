@@ -10,7 +10,9 @@ const List = () => {
   });
 
   // Initialize dueDate state and retrieve it from localStorage
-  const [dueDate, setDueDate] = useState(() => localStorage.getItem("dueDate") || "");
+  const [dueDate, setDueDate] = useState(
+    () => localStorage.getItem("dueDate") || "",
+  );
 
   // Get the current date
   const currentDate = new Date();
@@ -22,14 +24,14 @@ const List = () => {
   });
 
   // Handler for changing the list title
-  const handleTitleChange = (newValue) => {
+  const handleTitleChange = newValue => {
     setListTitle(newValue);
     // Update local storage directly within the onChange event
     localStorage.setItem("listTitle", newValue);
   };
 
   // Handler for changing the due date and storing it in localStorage
-  const handleDueDateChange = (newValue) => {
+  const handleDueDateChange = newValue => {
     setDueDate(newValue);
     localStorage.setItem("dueDate", newValue);
   };
@@ -48,7 +50,7 @@ return (
       <Input
         type="text"
         value={listTitle}
-        onChange={(e) => handleTitleChange(e.target.value)}
+        onChange={e => handleTitleChange(e.target.value)}
         disableUnderline={true}
         style={{ fontSize: "30px", fontWeight: 600 }}
       />
@@ -57,7 +59,7 @@ return (
         <Input
           type="date"
           value={dueDate}
-          onChange={(e) => handleDueDateChange(e.target.value)}
+          onChange={e => handleDueDateChange(e.target.value)}
         />
       </div>
       <div>
