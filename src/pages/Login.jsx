@@ -37,19 +37,13 @@ const Login = () => {
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <div style={{ marginBottom: "100px" }}>
-        <h1 className="mb-10 text-center text-6xl font-bold text-blue-500">
+        <h1 className = "mb-10 text-center text-6xl font-bold text-blue-500 lg:ml-20 ml-20">
           CoShop
         </h1>
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          margin: "10px",
-        }}
+      <div className="flex flex-col items-center lg:flex-row"
       >
-        <div style={{ marginRight: "50px" }}>
+        <div className = "ml-20 lg:mr-0 lg:mt-5">
           <h1 className="mb-10 text-center text-3xl font-bold text-blue-500">
             Shopping made simpler.
           </h1>
