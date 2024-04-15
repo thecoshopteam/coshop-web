@@ -54,9 +54,9 @@ const AboutUs = () => {
           <a
             target="_blank"
             style={{ color: "#007bff" }}
-            href="https://www.linkedin.com/in/your-user-name"
+            href="www.linkedin.com/in/gabriel-dasilva-244181283"
           >
-            Member 6
+            Gabriel DaSilva
           </a>
         </li>
       </ul>
