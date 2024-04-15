@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 // MUI component imports
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import Input from "@mui/material/Input";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
+import InventoryIcon from "@mui/icons-material/Inventory";
 import TextField from "@mui/material/TextField";
 
 const CSListItem = ({
@@ -16,7 +15,8 @@ const CSListItem = ({
   title,
   isBought,
   handleCheckboxToggle,
-  handleDeleteItem,
+  handleArchiveItem,
+  handleUpdateItemTitle,
 }) => {
   const [localQuantity, setLocalQuantity] = useState(() => {
     return parseInt(localStorage.getItem(`quantity_${id}`), 10) || 1;
@@ -40,44 +40,39 @@ const CSListItem = ({
     <ListItem
       key={id}
       secondaryAction={
-        <IconButton edge="end" aria-label="delete" onClick={handleDeleteItem}>
-          <DeleteIcon />
+        <IconButton edge="end" aria-label="delete" onClick={handleArchiveItem}>
+          <InventoryIcon />
         </IconButton>
       }
-      disablePadding
     >
-      <ListItemButton
-        role={undefined}
-        aria-label="checkbox"
-        dense
-        onClick={handleCheckboxToggle}
-      >
-        <ListItemIcon>
-          <Checkbox
-            edge="start"
-            checked={isBought}
-            tabIndex={-1}
-            inputProps={{ "aria-labelledby": id }}
-          />
-        </ListItemIcon>
-        <ListItemText
-          id={id}
-          primary={title}
-          style={{
-            textDecoration: isBought ? "line-through" : "none",
-            color: isBought ? "gray" : "inherit",
-          }}
+      <ListItemIcon>
+        <Checkbox
+          edge="start"
+          checked={isBought}
+          inputProps={{ "aria-labelledby": id }}
+          onChange={handleCheckboxToggle}
         />
-        <TextField
-          type="number"
-          value={localQuantity}
-          onChange={handleChange}
-          onClick={handleQuantityFieldClick} // Prevents click propagation
-          label="Quantity"
-          inputProps={{ min: 1 }}
-          sx={{ width: "120px" }}
-        />
-      </ListItemButton>
+      </ListItemIcon>
+      <Input
+        id={id}
+        defaultValue={title}
+        style={{
+          textDecoration: isBought ? "line-through" : "none",
+          color: isBought ? "gray" : "inherit",
+        }}
+        disableUnderline={true}
+        disabled={isBought}
+        onChange={e => handleUpdateItemTitle(e.target.value)}
+      />
+      <TextField
+        type="number"
+        value={localQuantity}
+        onChange={handleChange}
+        onClick={handleQuantityFieldClick} // Prevents click propagation
+        label="Quantity"
+        inputProps={{ min: 1 }}
+        sx={{ width: "120px" }}
+      />
     </ListItem>
   );
 };
@@ -87,7 +82,8 @@ CSListItem.propTypes = {
   title: PropTypes.string.isRequired,
   isBought: PropTypes.bool.isRequired,
   handleCheckboxToggle: PropTypes.func.isRequired,
-  handleDeleteItem: PropTypes.func.isRequired,
+  handleArchiveItem: PropTypes.func.isRequired,
+  handleUpdateItemTitle: PropTypes.func.isRequired,
 };
 
 export default CSListItem;
