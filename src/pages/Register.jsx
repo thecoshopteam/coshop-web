@@ -28,7 +28,7 @@ const Register = () => {
     setLoading(true);
     try {
       await registerUser(email, password);
-      navigate("/", { replace: true });
+      navigate("/onboarding", { replace: true });
     } catch (error) {
       setErrorMessage("Error. Please try again.");
       console.error(error);

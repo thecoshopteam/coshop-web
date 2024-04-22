@@ -12,6 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 // Page imports
 import Register from "./pages/Register";
+import Onboarding from "./pages/Onboarding";
 import Login from "./pages/Login";
 import List from "./pages/List";
 import Profile from "./pages/Profile";
@@ -34,6 +35,16 @@ const App = () => {
                 <AuthLayout>
                   <Register />
                 </AuthLayout>
+              }
+            />
+            <Route
+              path="/onboarding"
+              element={
+                <ProtectedRoute>
+                  <AuthLayout>
+                    <Onboarding />
+                  </AuthLayout>
+                </ProtectedRoute>
               }
             />
             <Route
