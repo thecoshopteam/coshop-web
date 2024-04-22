@@ -15,7 +15,12 @@ import ClearIcon from "@mui/icons-material/Clear";
 import CSListItem from "./CSListItem";
 import HistoryListItem from "./HistoryListItem";
 
-const CSList = ({ updateRemainingItemsCount, updateTotalItemsCount }) => {
+const CSList = ({
+  updateRemainingItemsCount,
+  updateTotalItemsCount,
+  updateListTitle,
+  updateDueDate,
+}) => {
   // Initialize state for items and history
   const [items, setItems] = useState(
     JSON.parse(localStorage.getItem("items")) || [],
@@ -186,6 +191,17 @@ const CSList = ({ updateRemainingItemsCount, updateTotalItemsCount }) => {
     setHistory([]);
   }
 
+  function clearList() {
+    localStorage.clear();
+    setHistory([]);
+    setItems([]);
+    setNewItemTitle("");
+    updateRemainingItemsCount(0);
+    updateTotalItemsCount(0);
+    updateListTitle("Untitled List");
+    updateDueDate("");
+  }
+
   return (
     <div>
       <form className="my-8 flex items-center gap-4" onSubmit={handleAddItem}>
@@ -199,8 +215,16 @@ const CSList = ({ updateRemainingItemsCount, updateTotalItemsCount }) => {
           Add Item
         </Button>
         <Button
+          type="button"
+          onClick={clearList}
+          variant="contained"
+          endIcon={<ClearIcon />}
+        >
+          Clear List
+        </Button>
+        <Button
           onClick={() => shoppingListPrinter()}
-          type="submit"
+          type="button"
           variant="contained"
           startIcon={<CloudDownloadIcon />}
         ></Button>
@@ -254,6 +278,8 @@ const CSList = ({ updateRemainingItemsCount, updateTotalItemsCount }) => {
 CSList.propTypes = {
   updateRemainingItemsCount: PropTypes.func.isRequired,
   updateTotalItemsCount: PropTypes.func.isRequired,
+  updateListTitle: PropTypes.func.isRequired,
+  updateDueDate: PropTypes.func.isRequired,
 };
 
 export default CSList;
