@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 // Context imports
@@ -28,7 +28,7 @@ const Register = () => {
     setLoading(true);
     try {
       await registerUser(email, password);
-      navigate("/", { replace: true });
+      navigate("/onboarding", { replace: true });
     } catch (error) {
       setErrorMessage("Error. Please try again.");
       console.error(error);

@@ -1,5 +1,3 @@
-import React from "react";
-
 // MUI component imports
 import Button from "@mui/material/Button";
 import ListAltIcon from "@mui/icons-material/ListAlt";
