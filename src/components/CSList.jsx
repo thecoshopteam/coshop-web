@@ -2,6 +2,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import List from "@mui/material/List";
 import Input from "@mui/material/Input";
+import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
@@ -211,28 +212,34 @@ const CSList = ({
             onChange={e => setNewItemTitle(e.target.value)}
             required
           />
-          <Button type="submit" variant="contained">
-            <AddIcon />
-          </Button>
+          <Tooltip title="Add item to list">
+            <Button type="submit" variant="contained">
+              <AddIcon />
+            </Button>
+          </Tooltip>
         </div>
 
         <div className="flex gap-2">
-          <Button
-            type="button"
-            onClick={clearList}
-            variant="outlined"
-            endIcon={<ClearIcon />}
-          >
-            Reset List
-          </Button>
-          <Button
-            onClick={() => shoppingListPrinter()}
-            type="button"
-            variant="contained"
-            endIcon={<CloudDownloadIcon />}
-          >
-            Download
-          </Button>
+          <Tooltip title="Reset entire list">
+            <Button
+              type="button"
+              onClick={clearList}
+              variant="outlined"
+              endIcon={<ClearIcon />}
+            >
+              Reset List
+            </Button>
+          </Tooltip>
+          <Tooltip title="Download list as image">
+            <Button
+              onClick={() => shoppingListPrinter()}
+              type="button"
+              variant="contained"
+              endIcon={<CloudDownloadIcon />}
+            >
+              Download
+            </Button>
+          </Tooltip>
         </div>
       </form>
       <List>
