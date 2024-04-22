@@ -160,7 +160,7 @@ const CSList = ({
 
     // Load the logo image
     const logo = new Image();
-    logo.src = "/coshop.png"; // Replace 'path/to/your/logo.png' with the actual path to your logo image
+    logo.src = "/coshop.png";
     logo.onload = function () {
       // Draw the logo onto the canvas at the center
       const logoWidth = 160;
@@ -249,13 +249,16 @@ const CSList = ({
         ))}
       </List>
       <div className="mt-2 flex gap-2">
-        <Button
-          onClick={() => updateShowHistory(!showHistory)}
-          variant="outlined"
-          endIcon={showHistory ? <VisibilityOffIcon /> : <VisibilityIcon />}
-        >
-          {showHistory ? "Hide Archived Items" : "Show Archived Items"}
-        </Button>
+        {history.length > 0 && (
+          <Button
+            onClick={() => updateShowHistory(!showHistory)}
+            variant="outlined"
+            endIcon={showHistory ? <VisibilityOffIcon /> : <VisibilityIcon />}
+          >
+            {showHistory ? "Hide Archived Items" : "Show Archived Items"}
+          </Button>
+        )}
+
         {history.length > 0 && (
           <Button
             onClick={clearArchivedList}
