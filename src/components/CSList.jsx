@@ -17,6 +17,7 @@ const CSList = ({
   updateTotalItemsCount,
   updateListTitle,
   updateDueDate,
+  updateStore,
 }) => {
   // Initialize state for items and history
   const [items, setItems] = useState(
@@ -42,7 +43,17 @@ const CSList = ({
     updateList(updatedList);
   };
 
-  const handleCheckboxToggle = id => {
+  const handleUpdateItemQuantity = (id, updatedItemQuantity) => {
+    if (updatedItemQuantity < 1) {
+      return;
+    }
+    const updatedList = items.map(item =>
+      item.id === id ? { ...item, quantity: updatedItemQuantity } : item,
+    );
+    updateList(updatedList);
+  };
+
+  const handleUpdateItemIsBought = id => {
     const updatedList = items.map(item =>
       item.id === id ? { ...item, isBought: !item.isBought } : item,
     );
@@ -76,6 +87,7 @@ const CSList = ({
       const newItem = {
         id: Date.now(), // Use a timestamp for a unique ID
         title: newItemTitle,
+        quantity: 1,
         isBought: false,
       };
       const updatedList = [newItem, ...items];
@@ -198,6 +210,7 @@ const CSList = ({
     updateListTitle("Untitled List");
     updateDueDate("");
     setShowHistory(false);
+    updateStore("");
   }
 
   return (
@@ -246,12 +259,18 @@ const CSList = ({
         {items.map(item => (
           <CSListItem
             key={item.id}
-            handleCheckboxToggle={() => handleCheckboxToggle(item.id)}
-            handleArchiveItem={() => handleArchiveItem(item.id)}
+            id={item.id}
+            title={item.title}
+            quantity={item.quantity}
+            isBought={item.isBought}
             handleUpdateItemTitle={updatedItemTitle =>
               handleUpdateItemTitle(item.id, updatedItemTitle)
             }
-            {...item}
+            handleUpdateItemQuantity={updatedItemQuantity =>
+              handleUpdateItemQuantity(item.id, updatedItemQuantity)
+            }
+            handleUpdateItemIsBought={() => handleUpdateItemIsBought(item.id)}
+            handleArchiveItem={() => handleArchiveItem(item.id)}
           />
         ))}
       </List>
@@ -298,6 +317,7 @@ CSList.propTypes = {
   updateTotalItemsCount: PropTypes.func.isRequired,
   updateListTitle: PropTypes.func.isRequired,
   updateDueDate: PropTypes.func.isRequired,
+  updateStore: PropTypes.func.isRequired,
 };
 
 export default CSList;

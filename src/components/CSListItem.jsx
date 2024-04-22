@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -11,29 +10,13 @@ import TextField from "@mui/material/TextField";
 const CSListItem = ({
   id,
   title,
+  quantity,
   isBought,
-  handleCheckboxToggle,
-  handleArchiveItem,
   handleUpdateItemTitle,
+  handleUpdateItemQuantity,
+  handleUpdateItemIsBought,
+  handleArchiveItem,
 }) => {
-  const [localQuantity, setLocalQuantity] = useState(() => {
-    return parseInt(localStorage.getItem(`quantity_${id}`), 10) || 1;
-  });
-
-  useEffect(() => {
-    localStorage.setItem(`quantity_${id}`, localQuantity.toString());
-  }, [id, localQuantity]);
-
-  const handleChange = event => {
-    const newQuantity = event.target.value;
-    setLocalQuantity(newQuantity);
-  };
-
-  const handleQuantityFieldClick = event => {
-    // Prevent propagation of click events from the quantity input field
-    event.stopPropagation();
-  };
-
   return (
     <ListItem
       key={id}
@@ -50,7 +33,7 @@ const CSListItem = ({
           edge="start"
           checked={isBought}
           inputProps={{ "aria-labelledby": id }}
-          onChange={handleCheckboxToggle}
+          onChange={handleUpdateItemIsBought}
         />
       </ListItemIcon>
       <Input
@@ -66,9 +49,8 @@ const CSListItem = ({
       />
       <TextField
         type="number"
-        value={localQuantity}
-        onChange={handleChange}
-        onClick={handleQuantityFieldClick} // Prevents click propagation
+        value={quantity}
+        onChange={e => handleUpdateItemQuantity(e.target.value)}
         label="Quantity"
         size="small"
         sx={{ width: "100px" }}
@@ -80,10 +62,12 @@ const CSListItem = ({
 CSListItem.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired,
   isBought: PropTypes.bool.isRequired,
-  handleCheckboxToggle: PropTypes.func.isRequired,
-  handleArchiveItem: PropTypes.func.isRequired,
   handleUpdateItemTitle: PropTypes.func.isRequired,
+  handleUpdateItemQuantity: PropTypes.func.isRequired,
+  handleUpdateItemIsBought: PropTypes.func.isRequired,
+  handleArchiveItem: PropTypes.func.isRequired,
 };
 
 export default CSListItem;
