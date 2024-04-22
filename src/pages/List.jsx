@@ -179,6 +179,7 @@ const List = () => {
           updateTotalItemsCount={setTotalItemsCount}
           updateListTitle={setListTitle}
           updateDueDate={setDueDate}
+          updateStore={setStore}
         />
       </div>
     </div>
