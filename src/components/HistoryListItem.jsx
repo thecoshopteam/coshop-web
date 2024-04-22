@@ -1,6 +1,4 @@
 import PropTypes from "prop-types";
-
-// MUI component imports
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import IconButton from "@mui/material/IconButton";
@@ -16,6 +14,7 @@ const HistoryListItem = ({ id, title, handleAddItem }) => {
         </IconButton>
       }
       disablePadding
+      className="py-2"
     >
       <ListItemText
         id={id}

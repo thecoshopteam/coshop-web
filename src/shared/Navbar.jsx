@@ -54,7 +54,7 @@ const Navbar = () => {
             <HomeIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            CoShop
+            <a href="/">CoShop</a>
           </Typography>
           <div>
             <IconButton

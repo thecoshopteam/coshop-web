@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-
-// MUI component imports
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Input from "@mui/material/Input";
@@ -44,6 +42,8 @@ const CSListItem = ({
           <InventoryIcon />
         </IconButton>
       }
+      disablePadding
+      className="py-2"
     >
       <ListItemIcon>
         <Checkbox
@@ -70,8 +70,8 @@ const CSListItem = ({
         onChange={handleChange}
         onClick={handleQuantityFieldClick} // Prevents click propagation
         label="Quantity"
-        inputProps={{ min: 1 }}
-        sx={{ width: "120px" }}
+        size="small"
+        sx={{ width: "100px" }}
       />
     </ListItem>
   );

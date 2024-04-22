@@ -1,7 +1,4 @@
-import React from "react";
 import PropTypes from "prop-types";
-
-// Shared component imports
 import Navbar from "../shared/Navbar";
 import Footer from "../components/Footer";
 
@@ -9,7 +6,7 @@ const AppLayout = ({ children }) => {
   return (
     <div>
       <Navbar />
-      <main>{children}</main>
+      <main className="px-4">{children}</main>
       <Footer />
     </div>
   );
