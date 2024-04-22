@@ -1,17 +1,13 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-
-// MUI component imports
 import List from "@mui/material/List";
 import Input from "@mui/material/Input";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import ClearIcon from "@mui/icons-material/Clear";
-
-// Local component imports
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import CSListItem from "./CSListItem";
 import HistoryListItem from "./HistoryListItem";
 
@@ -200,36 +196,46 @@ const CSList = ({
     updateTotalItemsCount(0);
     updateListTitle("Untitled List");
     updateDueDate("");
+    setShowHistory(false);
   }
 
   return (
     <div>
-      <form className="my-8 flex items-center gap-4" onSubmit={handleAddItem}>
-        <Input
-          type="text"
-          placeholder="Enter item title"
-          value={newItemTitle}
-          onChange={e => setNewItemTitle(e.target.value)}
-        />
-        <Button type="submit" variant="contained" endIcon={<AddIcon />}>
-          Add Item
-        </Button>
-        <Button
-          type="button"
-          onClick={clearList}
-          variant="contained"
-          endIcon={<ClearIcon />}
-        >
-          Clear List
-        </Button>
-        <Button
-          onClick={() => shoppingListPrinter()}
-          type="button"
-          variant="contained"
-          startIcon={<CloudDownloadIcon />}
-        ></Button>
+      <form className="my-4 flex flex-col gap-4" onSubmit={handleAddItem}>
+        <div className="flex gap-2">
+          <Input
+            autoFocus
+            type="text"
+            placeholder="Enter item name"
+            value={newItemTitle}
+            onChange={e => setNewItemTitle(e.target.value)}
+            required
+          />
+          <Button type="submit" variant="contained">
+            <AddIcon />
+          </Button>
+        </div>
+
+        <div className="flex gap-2">
+          <Button
+            type="button"
+            onClick={clearList}
+            variant="outlined"
+            endIcon={<ClearIcon />}
+          >
+            Reset List
+          </Button>
+          <Button
+            onClick={() => shoppingListPrinter()}
+            type="button"
+            variant="contained"
+            endIcon={<CloudDownloadIcon />}
+          >
+            Download
+          </Button>
+        </div>
       </form>
-      <List className="w-full max-w-md">
+      <List>
         {items.map(item => (
           <CSListItem
             key={item.id}
@@ -242,16 +248,27 @@ const CSList = ({
           />
         ))}
       </List>
-      <Button
-        onClick={() => updateShowHistory(!showHistory)}
-        variant="text"
-        endIcon={showHistory ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-      >
-        {showHistory ? "Hide Archived Items" : "Show Archived Items"}
-      </Button>
+      <div className="mt-2 flex gap-2">
+        <Button
+          onClick={() => updateShowHistory(!showHistory)}
+          variant="outlined"
+          endIcon={showHistory ? <VisibilityOffIcon /> : <VisibilityIcon />}
+        >
+          {showHistory ? "Hide Archived Items" : "Show Archived Items"}
+        </Button>
+        {history.length > 0 && (
+          <Button
+            onClick={clearArchivedList}
+            variant="contained"
+            endIcon={<ClearIcon />}
+          >
+            Clear Archived List
+          </Button>
+        )}
+      </div>
       {showHistory && (
         <>
-          <List className="w-full max-w-md">
+          <List>
             {history.map(item => (
               <HistoryListItem
                 key={item.id}
@@ -261,15 +278,6 @@ const CSList = ({
             ))}
           </List>
         </>
-      )}
-      {history.length > 0 && (
-        <Button
-          onClick={clearArchivedList}
-          variant="contained"
-          endIcon={<ClearIcon />}
-        >
-          Clear Archived List
-        </Button>
       )}
     </div>
   );

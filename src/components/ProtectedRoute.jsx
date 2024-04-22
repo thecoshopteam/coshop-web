@@ -1,8 +1,5 @@
-import React from "react";
 import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
-
-// Context imports
 import { UserAuth } from "../context/AuthContext";
 
 function ProtectedRoute({ children }) {

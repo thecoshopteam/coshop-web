@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import Profile from "./Profile";
 import { UserAuth } from "../context/AuthContext"; // Import UserAuth from context

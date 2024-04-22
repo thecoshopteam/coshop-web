@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 // MUI component imports
 import Input from "@mui/material/Input";

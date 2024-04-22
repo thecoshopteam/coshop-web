@@ -45,34 +45,38 @@ const List = () => {
   );
 
   return (
-    <div className="p-5 lg:p-10">
-      <h2 className="text-xl font-medium text-gray-500">{formattedDate}</h2>
-      <Input
-        type="text"
-        value={listTitle}
-        onChange={e => handleTitleChange(e.target.value)}
-        disableUnderline={true}
-        style={{ fontSize: "30px", fontWeight: 600 }}
-      />
-      <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
-        <span style={{ marginRight: "10px" }}>Due Date:</span>
+    <div className="mt-10 flex min-h-svh items-start justify-center sm:mt-40">
+      <div>
+        <h2 className="text-xl font-medium text-gray-500">
+          Today is {formattedDate}
+        </h2>
         <Input
-          type="date"
-          value={dueDate}
-          onChange={e => handleDueDateChange(e.target.value)}
+          type="text"
+          value={listTitle}
+          onChange={e => handleTitleChange(e.target.value)}
+          disableUnderline={true}
+          style={{ fontSize: "30px", fontWeight: 600 }}
+        />
+        <div className="flex items-center gap-[2px]">
+          <span>Due date:</span>
+          <Input
+            type="date"
+            value={dueDate}
+            onChange={e => handleDueDateChange(e.target.value)}
+            disableUnderline
+          />
+        </div>
+        <p>
+          Items remaining: {remainingItemsCount}/{totalItemsCount}
+        </p>
+
+        <CSList
+          updateRemainingItemsCount={setRemainingItemsCount}
+          updateTotalItemsCount={setTotalItemsCount}
+          updateListTitle={setListTitle}
+          updateDueDate={setDueDate}
         />
       </div>
-      <div>
-        <p>
-          List items remaining: {remainingItemsCount}/{totalItemsCount}
-        </p>
-      </div>
-      <CSList
-        updateRemainingItemsCount={setRemainingItemsCount}
-        updateTotalItemsCount={setTotalItemsCount}
-        updateListTitle={setListTitle}
-        updateDueDate={setDueDate}
-      />
     </div>
   );
 };
