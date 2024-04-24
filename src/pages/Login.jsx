@@ -37,13 +37,13 @@ const Login = () => {
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <div style={{ marginBottom: "100px" }}>
-        <h1 className="mb-10 ml-20 text-center text-6xl font-bold text-blue-500 lg:ml-20">
+        <h1 className="mb-10 ml-20 text-center text-6xl font-bold text-brand lg:ml-20">
           CoShop
         </h1>
       </div>
       <div className="flex flex-col items-center lg:flex-row">
-        <div className="ml-20 lg:mr-0 lg:mt-5">
-          <h1 className="mb-10 text-center text-3xl font-bold text-blue-500">
+        <div className=" rounded-lg bg-brand pl-10 pr-10 pt-10 lg:mr-0 lg:mt-0">
+          <h1 className="mb-10 text-center text-3xl font-bold text-white">
             Shopping made simpler.
           </h1>
           <h2
@@ -52,14 +52,14 @@ const Login = () => {
               wordWrap: "break-word",
               textAlign: "left",
             }}
-            className="text-1xl mb-10 text-center text-black"
+            className="text-1xl mb-10 text-center text-white"
           >
             By effortlessly collaborating with friends and family, making list
             sharing a breeze. Stay organized, save time, and simplify your
             shopping routine, all in one app!
           </h2>
         </div>
-        <div style={{ marginLeft: "50px" }}>
+        <div className="ml-0 mt-5 lg:ml-10 ">
           <h1 className="mb-10 text-center text-3xl font-bold">
             Log in to your account
           </h1>
