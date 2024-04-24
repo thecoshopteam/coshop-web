@@ -42,7 +42,7 @@ const Login = () => {
         </h1>
       </div>
       <div className="flex flex-col items-center lg:flex-row">
-        <div className=" lg:mr-0 lg:mt-0 bg-brand rounded-lg pt-10 pl-10 pr-10">
+        <div className=" rounded-lg bg-brand pl-10 pr-10 pt-10 lg:mr-0 lg:mt-0">
           <h1 className="mb-10 text-center text-3xl font-bold text-white">
             Shopping made simpler.
           </h1>

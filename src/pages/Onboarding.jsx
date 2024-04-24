@@ -21,7 +21,7 @@ export default function Onboarding() {
     }
   };
   return (
-    <div className="border-brand/20 flex flex-col items-center rounded-xl border px-10 py-20">
+    <div className="flex flex-col items-center rounded-xl border border-brand/20 px-10 py-20">
       {screen === 0 && <OBWelcome />}
       {screen === 1 && <OBCreateLists />}
       {screen === 2 && <OBAddAttributes />}
