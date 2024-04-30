@@ -18,6 +18,7 @@ import List from "./pages/List";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import AboutUs from "./pages/AboutUs";
+import FAQ from "./pages/FAQ";
 
 // Theme imports
 import { ThemeProvider } from "@mui/material";
@@ -91,6 +92,16 @@ const App = () => {
                 <ProtectedRoute>
                   <AppLayout>
                     <NotFound />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/faq"
+              element={
+                <ProtectedRoute>
+                  <AppLayout>
+                    <FAQ />
                   </AppLayout>
                 </ProtectedRoute>
               }
