@@ -21,7 +21,7 @@ const CSListItem = ({
     <ListItem
       key={id}
       secondaryAction={
-        <IconButton edge="end" aria-label="delete" onClick={handleArchiveItem}>
+        <IconButton edge="end" aria-label="archive" onClick={() => handleArchiveItem()}>
           <InventoryIcon />
         </IconButton>
       }
@@ -37,23 +37,25 @@ const CSListItem = ({
         />
       </ListItemIcon>
       <Input
-        id={id}
+        id={`item-title-${id}`}
         defaultValue={title}
+        onBlur={e => handleUpdateItemTitle(e.target.value)}
         style={{
           textDecoration: isBought ? "line-through" : "none",
           color: isBought ? "gray" : "inherit",
         }}
         disableUnderline={true}
         disabled={isBought}
-        onChange={e => handleUpdateItemTitle(e.target.value)}
       />
       <TextField
+        id={`item-quantity-${id}`}
         type="number"
-        value={quantity}
-        onChange={e => handleUpdateItemQuantity(e.target.value)}
+        defaultValue={quantity}
+        onBlur={e => handleUpdateItemQuantity(parseInt(e.target.value))}
         label="Quantity"
         size="small"
         sx={{ width: "100px" }}
+        InputProps={{ inputProps: { min: 1 } }}
       />
     </ListItem>
   );
