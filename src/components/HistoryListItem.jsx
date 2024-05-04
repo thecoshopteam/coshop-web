@@ -24,7 +24,7 @@ const HistoryListItem = ({ id, title, handleAddItem }) => {
         primary={title}
         style={{
           color: "gray", // style for archived items to indicate they are not active
-          textDecoration: "line-through" // optional: you can show it as crossed out if that fits the UI better
+          textDecoration: "line-through", // optional: you can show it as crossed out if that fits the UI better
         }}
       />
     </ListItem>
