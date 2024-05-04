@@ -13,22 +13,27 @@ import HistoryListItem from "./HistoryListItem";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-
-const CSList = ({
-  list,
-  updateList,
-}) => {
+const CSList = ({ list, updateList }) => {
   const [newItemTitle, setNewItemTitle] = useState("");
   const [showHistory, setShowHistory] = useState(false);
 
   const handleAddItem = event => {
     event.preventDefault();
     if (newItemTitle.trim() !== "") {
-      const newItemTitleNormalized = newItemTitle.trim().toLowerCase().replace(/\s/g, "");
-      const existingItem = list.items.find(item => item.title.trim().toLowerCase().replace(/\s/g, "") === newItemTitleNormalized);
+      const newItemTitleNormalized = newItemTitle
+        .trim()
+        .toLowerCase()
+        .replace(/\s/g, "");
+      const existingItem = list.items.find(
+        item =>
+          item.title.trim().toLowerCase().replace(/\s/g, "") ===
+          newItemTitleNormalized,
+      );
 
       if (existingItem) {
-        const confirmation = window.confirm("This item already exists in the list. Do you still want to add it?");
+        const confirmation = window.confirm(
+          "This item already exists in the list. Do you still want to add it?",
+        );
         if (!confirmation) {
           return;
         }
@@ -39,52 +44,61 @@ const CSList = ({
         title: newItemTitle,
         quantity: 1,
         isBought: false,
+        category: "",
       };
 
       const updatedItems = [newItem, ...list.items];
-      const newRemainingCount = updatedItems.filter(item => !item.isBought).length;
+      const newRemainingCount = updatedItems.filter(
+        item => !item.isBought,
+      ).length;
       const newTotalItemsCount = updatedItems.length;
 
-      updateList({ 
-        ...list, 
-        items: updatedItems, 
+
+      updateList({
+        ...list,
+        items: updatedItems,
         remainingItemsCount: newRemainingCount,
         totalItemsCount: newTotalItemsCount,
-        history: list.history || []
+        history: list.history || [],
       });
       setNewItemTitle("");
     }
   };
 
   const handleItemUpdate = (id, updatedFields) => {
-    const updatedItems = list.items.map(item => item.id === id ? { ...item, ...updatedFields } : item);
-    const newRemainingCount = updatedItems.filter(item => !item.isBought).length;
+    const updatedItems = list.items.map(item =>
+      item.id === id ? { ...item, ...updatedFields } : item,
+    );
+    const newRemainingCount = updatedItems.filter(
+      item => !item.isBought,
+    ).length;
     const newTotalItemsCount = updatedItems.length;
-  
-    updateList({ 
-      ...list, 
-      items: updatedItems, 
+
+    updateList({
+      ...list,
+      items: updatedItems,
       remainingItemsCount: newRemainingCount,
       totalItemsCount: newTotalItemsCount,
-      history: list.history || []
+      history: list.history || [],
     });
   };
-  
 
   const handleArchiveItem = id => {
     const itemToArchive = list.items.find(item => item.id === id);
     if (itemToArchive) {
       const updatedItems = list.items.filter(item => item.id !== id);
       const updatedHistory = [itemToArchive, ...(list.history || [])];
-      const newRemainingCount = updatedItems.filter(item => !item.isBought).length;
+      const newRemainingCount = updatedItems.filter(
+        item => !item.isBought,
+      ).length;
       const newTotalItemsCount = updatedItems.length;
 
-      updateList({ 
-        ...list, 
-        items: updatedItems, 
+      updateList({
+        ...list,
+        items: updatedItems,
         remainingItemsCount: newRemainingCount,
         totalItemsCount: newTotalItemsCount,
-        history: updatedHistory 
+        history: updatedHistory,
       });
     }
   };
@@ -93,11 +107,16 @@ const CSList = ({
     setShowHistory(!showHistory);
   };
 
-  const addItemFromHistory = (id) => {
+  const addItemFromHistory = id => {
     const itemToAddBack = (list.history || []).find(item => item.id === id);
     if (itemToAddBack) {
-      const updatedHistory = (list.history || []).filter(item => item.id !== id);
-      const updatedItems = [...list.items, { ...itemToAddBack, isBought: false }];
+      const updatedHistory = (list.history || []).filter(
+        item => item.id !== id,
+      );
+      const updatedItems = [
+        ...list.items,
+        { ...itemToAddBack, isBought: false },
+      ];
       updateList({ ...list, items: updatedItems, history: updatedHistory });
     }
   };
@@ -172,6 +191,16 @@ const CSList = ({
     shoppingListPrinter(list);
   };
 
+  const handleUpdateItemCategory = (id, category) => {
+    const updatedItems = list.items.map(item =>
+      item.id === id ? { ...item, category } : item,
+    );
+    updateList({
+      ...list,
+      items: updatedItems,
+    });
+  };
+
   return (
     <div>
       <form className="my-4 flex flex-col gap-4" onSubmit={handleAddItem}>
@@ -192,16 +221,24 @@ const CSList = ({
         </div>
 
         <div className="flex gap-2">
-            <Tooltip title="Reset entire list">
-              <Button onClick={handleResetList} variant="outlined" color="primary">
-                Reset List
-              </Button>
-            </Tooltip>
-            <Tooltip title="Download list as image">
-              <Button onClick={handleDownloadList} variant="contained" endIcon={<CloudDownloadIcon />}>
-                Download
-              </Button>
-            </Tooltip>
+          <Tooltip title="Reset entire list">
+            <Button
+              onClick={handleResetList}
+              variant="outlined"
+              color="primary"
+            >
+              Reset List
+            </Button>
+          </Tooltip>
+          <Tooltip title="Download list as image">
+            <Button
+              onClick={handleDownloadList}
+              variant="contained"
+              endIcon={<CloudDownloadIcon />}
+            >
+              Download
+            </Button>
+          </Tooltip>
         </div>
       </form>
       <List>
@@ -209,14 +246,21 @@ const CSList = ({
           <CSListItem
             key={item.id}
             {...item}
-            handleUpdateItemTitle={(updatedTitle) => handleItemUpdate(item.id, { title: updatedTitle })}
-            handleUpdateItemQuantity={(updatedQuantity) => handleItemUpdate(item.id, { quantity: updatedQuantity })}
-            handleUpdateItemIsBought={() => handleItemUpdate(item.id, { isBought: !item.isBought })}
+            handleUpdateItemTitle={updatedTitle =>
+              handleItemUpdate(item.id, { title: updatedTitle })
+            }
+            handleUpdateItemQuantity={updatedQuantity =>
+              handleItemUpdate(item.id, { quantity: updatedQuantity })
+            }
+            handleUpdateItemIsBought={() =>
+              handleItemUpdate(item.id, { isBought: !item.isBought })
+            }
             handleArchiveItem={() => handleArchiveItem(item.id)}
+            handleUpdateItemCategory={(category) => handleUpdateItemCategory(item.id, category)}
           />
         ))}
       </List>
-            <div className="mt-2 flex gap-2">
+      <div className="mt-2 flex gap-2">
         {list.history && list.history.length > 0 && (
           <Button
             onClick={toggleHistoryVisibility}
@@ -258,4 +302,3 @@ CSList.propTypes = {
 };
 
 export default CSList;
-
