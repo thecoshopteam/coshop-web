@@ -12,6 +12,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Divider from "@mui/material/Divider";
+import ContactsIcon from "@mui/icons-material/Contacts";
 
 const Navbar = () => {
   const { logoutUser } = UserAuth();
@@ -55,6 +56,19 @@ const Navbar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <a href="/">CoShop</a>
           </Typography>
+          <Tooltip title="Go to Contacts">
+            <IconButton
+              size="large"
+              edge="end"
+              color="inherit"
+              aria-label="contacts"
+              sx={{ mr: 2 }}
+              onClick={() => navigate("/contacts")}
+            >
+              <ContactsIcon />
+            </IconButton>
+          </Tooltip>
+
           <div>
             <Tooltip title="Go to profile">
               <IconButton

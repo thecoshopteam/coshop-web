@@ -19,6 +19,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import AboutUs from "./pages/AboutUs";
 import FAQ from "./pages/FAQ";
+import Contacts from "./pages/Contacts"
 
 // Theme imports
 import { ThemeProvider } from "@mui/material";
@@ -102,6 +103,16 @@ const App = () => {
                 <ProtectedRoute>
                   <AppLayout>
                     <FAQ />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/contacts"
+              element={
+                <ProtectedRoute>
+                  <AppLayout>
+                    <Contacts />
                   </AppLayout>
                 </ProtectedRoute>
               }
