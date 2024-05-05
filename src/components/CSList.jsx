@@ -145,6 +145,7 @@ const CSList = ({ list, updateList }) => {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    const title = currentList.title || "Shopping List";
     const titleFontSize = 32;
     ctx.font = `${titleFontSize}px Inter`;
     ctx.fillStyle = "blue";
