@@ -126,7 +126,8 @@ const CSList = () => {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    const title = "Shopping List"; //find the list name for this
+    let title = localStorage.listTitle || "Shopping list"; // uses list name in local storage if set
+
     const titleFontSize = 32;
     ctx.font = titleFontSize + "px Arial";
     ctx.fillStyle = "blue";
