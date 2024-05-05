@@ -146,8 +146,8 @@ const CSList = ({ list, updateList }) => {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw the title
-    const title = currentList.title || "Shopping List";
+    let title = localStorage.listTitle || "Shopping list"; // uses list name in local storage if set
+
     const titleFontSize = 32;
     ctx.font = `${titleFontSize}px Inter`;
     ctx.fillStyle = "blue";
