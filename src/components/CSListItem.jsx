@@ -6,6 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import TextField from "@mui/material/TextField";
+import React from "react";
 
 const CSListItem = ({
   id,
@@ -20,12 +21,7 @@ const CSListItem = ({
   handleUpdateItemCategory,
 }) => {
   return (
-    <ListItem
-      key={id}
-      disablePadding
-      className="py-2"
-      alignItems="center"
-    >
+    <ListItem key={id} disablePadding className="py-2" alignItems="center">
       <ListItemIcon>
         <Checkbox
           edge="start"
@@ -37,7 +33,7 @@ const CSListItem = ({
       <Input
         id={`item-title-${id}`}
         defaultValue={title}
-        onBlur={(e) => handleUpdateItemTitle(e.target.value)}
+        onBlur={e => handleUpdateItemTitle(e.target.value)}
         style={{
           textDecoration: isBought ? "line-through" : "none",
           color: isBought ? "gray" : "inherit",
@@ -49,11 +45,13 @@ const CSListItem = ({
       />
       <select
         value={category}
-        onChange={(e) => handleUpdateItemCategory(e.target.value)}
-        style={{ width: "160px", 
-        marginRight: "8px",
-        backgroundColor: "white",
-        color: "gray",  }} 
+        onChange={e => handleUpdateItemCategory(e.target.value)}
+        style={{
+          width: "160px",
+          marginRight: "8px",
+          backgroundColor: "white",
+          color: "gray",
+        }}
       >
         <option value="">Select category...</option>
         <option value="Fruits">Fruits</option>
@@ -78,12 +76,13 @@ const CSListItem = ({
       </select>
       <TextField
         id={`item-quantity-${id}`}
+        data-testid={`item-quantity-input-${id}`}
         type="number"
         defaultValue={quantity}
-        onBlur={(e) => handleUpdateItemQuantity(parseInt(e.target.value))}
+        onBlur={e => handleUpdateItemQuantity(parseInt(e.target.value))}
         label="Quantity"
         size="small"
-        sx={{ width: "80px", marginRight: "8px" }} 
+        sx={{ width: "80px", marginRight: "8px" }}
         InputProps={{ inputProps: { min: 1 } }}
       />
       <IconButton

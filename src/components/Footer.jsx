@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 const Footer = () => {
   const theme = useTheme();
   return (

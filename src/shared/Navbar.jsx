@@ -32,14 +32,14 @@ const Navbar = () => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleMenu = (event) => {
+  const handleMenu = event => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   const { switchTheme } = useTheme();
 
   return (

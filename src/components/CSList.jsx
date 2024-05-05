@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import List from "@mui/material/List";
 import Input from "@mui/material/Input";
@@ -52,7 +53,6 @@ const CSList = ({ list, updateList }) => {
         item => !item.isBought,
       ).length;
       const newTotalItemsCount = updatedItems.length;
-
 
       updateList({
         ...list,
@@ -145,8 +145,8 @@ const CSList = ({ list, updateList }) => {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw the title
-    const title = currentList.title || "Shopping List";
+    let title = localStorage.listTitle || "Shopping list"; // uses list name in local storage if set
+
     const titleFontSize = 32;
     ctx.font = `${titleFontSize}px Inter`;
     ctx.fillStyle = "blue";
@@ -214,7 +214,11 @@ const CSList = ({ list, updateList }) => {
             required
           />
           <Tooltip title="Add item to list">
-            <Button type="submit" variant="contained">
+            <Button
+              type="submit"
+              variant="contained"
+              data-testid="add-item-button"
+            >
               <AddIcon />
             </Button>
           </Tooltip>
@@ -256,7 +260,9 @@ const CSList = ({ list, updateList }) => {
               handleItemUpdate(item.id, { isBought: !item.isBought })
             }
             handleArchiveItem={() => handleArchiveItem(item.id)}
-            handleUpdateItemCategory={(category) => handleUpdateItemCategory(item.id, category)}
+            handleUpdateItemCategory={category =>
+              handleUpdateItemCategory(item.id, category)
+            }
           />
         ))}
       </List>
