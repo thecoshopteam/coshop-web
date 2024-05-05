@@ -12,21 +12,19 @@ const CSListItem = ({
   title,
   quantity,
   isBought,
+  category,
   handleUpdateItemTitle,
   handleUpdateItemQuantity,
   handleUpdateItemIsBought,
   handleArchiveItem,
+  handleUpdateItemCategory,
 }) => {
   return (
     <ListItem
       key={id}
-      secondaryAction={
-        <IconButton edge="end" aria-label="delete" onClick={handleArchiveItem}>
-          <InventoryIcon />
-        </IconButton>
-      }
       disablePadding
       className="py-2"
+      alignItems="center"
     >
       <ListItemIcon>
         <Checkbox
@@ -37,24 +35,64 @@ const CSListItem = ({
         />
       </ListItemIcon>
       <Input
-        id={id}
+        id={`item-title-${id}`}
         defaultValue={title}
+        onBlur={(e) => handleUpdateItemTitle(e.target.value)}
         style={{
           textDecoration: isBought ? "line-through" : "none",
           color: isBought ? "gray" : "inherit",
+          width: "160px",
         }}
         disableUnderline={true}
         disabled={isBought}
-        onChange={e => handleUpdateItemTitle(e.target.value)}
+        sx={{ flex: 1 }}
       />
+      <select
+        value={category}
+        onChange={(e) => handleUpdateItemCategory(e.target.value)}
+        style={{ width: "160px", 
+        marginRight: "8px",
+        backgroundColor: "white",
+        color: "gray",  }} 
+      >
+        <option value="">Select category...</option>
+        <option value="Fruits">Fruits</option>
+        <option value="Vegetables">Vegetables</option>
+        <option value="Canned Goods">Canned Goods</option>
+        <option value="Dairy">Dairy</option>
+        <option value="Meat">Meat</option>
+        <option value="Seafood">Seafood</option>
+        <option value="Deli">Deli</option>
+        <option value="Condiments/Spices">Condiments/Spices</option>
+        <option value="Snacks">Snacks</option>
+        <option value="Bread & Bakery">Bread & Bakery</option>
+        <option value="Beverages">Beverages</option>
+        <option value="Pasta, Rice & Cereal">Pasta, Rice & Cereal</option>
+        <option value="Baking">Baking</option>
+        <option value="Frozen Foods">Frozen Foods</option>
+        <option value="Personal Care">Personal Care</option>
+        <option value="Health Care">Health Care</option>
+        <option value="Household Supplies">Household Supplies</option>
+        <option value="Baby Items">Baby Items</option>
+        <option value="Pet Care">Pet Care</option>
+      </select>
       <TextField
+        id={`item-quantity-${id}`}
         type="number"
-        value={quantity}
-        onChange={e => handleUpdateItemQuantity(e.target.value)}
+        defaultValue={quantity}
+        onBlur={(e) => handleUpdateItemQuantity(parseInt(e.target.value))}
         label="Quantity"
         size="small"
-        sx={{ width: "100px" }}
+        sx={{ width: "80px", marginRight: "8px" }} 
+        InputProps={{ inputProps: { min: 1 } }}
       />
+      <IconButton
+        edge="end"
+        aria-label="archive"
+        onClick={() => handleArchiveItem()}
+      >
+        <InventoryIcon />
+      </IconButton>
     </ListItem>
   );
 };
@@ -64,10 +102,12 @@ CSListItem.propTypes = {
   title: PropTypes.string.isRequired,
   quantity: PropTypes.number.isRequired,
   isBought: PropTypes.bool.isRequired,
+  category: PropTypes.string,
   handleUpdateItemTitle: PropTypes.func.isRequired,
   handleUpdateItemQuantity: PropTypes.func.isRequired,
   handleUpdateItemIsBought: PropTypes.func.isRequired,
   handleArchiveItem: PropTypes.func.isRequired,
+  handleUpdateItemCategory: PropTypes.func.isRequired,
 };
 
 export default CSListItem;

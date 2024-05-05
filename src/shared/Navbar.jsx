@@ -13,7 +13,8 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Divider from "@mui/material/Divider";
-import {useTheme} from "../context/themeContent"
+import ContactsIcon from "@mui/icons-material/Contacts"; // Added ContactsIcon
+import { useTheme } from "../context/themeContent";
 
 const Navbar = () => {
   const { logoutUser } = UserAuth();
@@ -30,14 +31,16 @@ const Navbar = () => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleMenu = event => {
+  const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const {switchTheme} = useTheme();
+  
+  const { switchTheme } = useTheme();
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -57,8 +60,19 @@ const Navbar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <a href="/">CoShop</a>
           </Typography>
-            <Switch onChange={switchTheme}>
-            </Switch>
+          <Switch onChange={switchTheme} /> {/* Moved Switch component */}
+          <Tooltip title="Go to Contacts">
+            <IconButton
+              size="large"
+              edge="end"
+              color="inherit"
+              aria-label="contacts"
+              sx={{ mr: 2 }}
+              onClick={() => navigate("/contacts")}
+            >
+              <ContactsIcon />
+            </IconButton>
+          </Tooltip>
           <div>
             <Tooltip title="Go to profile">
               <IconButton

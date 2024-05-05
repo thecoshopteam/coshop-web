@@ -5,146 +5,138 @@ import Input from "@mui/material/Input";
 import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import ClearIcon from "@mui/icons-material/Clear";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import CSListItem from "./CSListItem";
 import HistoryListItem from "./HistoryListItem";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-const CSList = ({
-  updateRemainingItemsCount,
-  updateTotalItemsCount,
-  updateListTitle,
-  updateDueDate,
-  updateStore,
-}) => {
-  // Initialize state for items and history
-  const [items, setItems] = useState(
-    JSON.parse(localStorage.getItem("items")) || [],
-  );
-  const [history, setHistory] = useState(
-    JSON.parse(localStorage.getItem("history")) || [],
-  );
+const CSList = ({ list, updateList }) => {
   const [newItemTitle, setNewItemTitle] = useState("");
-  const [showHistory, setShowHistory] = useState(
-    localStorage.getItem("showHistory") === "true" || false,
-  );
-
-  const updateShowHistory = value => {
-    setShowHistory(value);
-    localStorage.setItem("showHistory", value);
-  };
-
-  const handleUpdateItemTitle = (id, updatedItemTitle) => {
-    const updatedList = items.map(item =>
-      item.id === id ? { ...item, title: updatedItemTitle } : item,
-    );
-    updateList(updatedList);
-  };
-
-  const handleUpdateItemQuantity = (id, updatedItemQuantity) => {
-    if (updatedItemQuantity < 1) {
-      return;
-    }
-    const updatedList = items.map(item =>
-      item.id === id ? { ...item, quantity: updatedItemQuantity } : item,
-    );
-    updateList(updatedList);
-  };
-
-  const handleUpdateItemIsBought = id => {
-    const updatedList = items.map(item =>
-      item.id === id ? { ...item, isBought: !item.isBought } : item,
-    );
-    updateList(updatedList);
-  };
+  const [showHistory, setShowHistory] = useState(false);
 
   const handleAddItem = event => {
     event.preventDefault();
     if (newItemTitle.trim() !== "") {
-      // Convert both the new item title and existing item titles to lowercase and remove spaces
       const newItemTitleNormalized = newItemTitle
         .trim()
         .toLowerCase()
         .replace(/\s/g, "");
-      const existingItem = items.find(
+      const existingItem = list.items.find(
         item =>
           item.title.trim().toLowerCase().replace(/\s/g, "") ===
           newItemTitleNormalized,
       );
 
       if (existingItem) {
-        // If the item already exists, ask the user if they want to add it again
         const confirmation = window.confirm(
           "This item already exists in the list. Do you still want to add it?",
         );
         if (!confirmation) {
-          // If the user cancels, return without adding the duplicate item
           return;
         }
       }
+
       const newItem = {
-        id: Date.now(), // Use a timestamp for a unique ID
+        id: Date.now(),
         title: newItemTitle,
         quantity: 1,
         isBought: false,
+        category: "",
       };
-      const updatedList = [newItem, ...items];
-      updateList(updatedList);
+
+      const updatedItems = [newItem, ...list.items];
+      const newRemainingCount = updatedItems.filter(
+        item => !item.isBought,
+      ).length;
+      const newTotalItemsCount = updatedItems.length;
+
+
+      updateList({
+        ...list,
+        items: updatedItems,
+        remainingItemsCount: newRemainingCount,
+        totalItemsCount: newTotalItemsCount,
+        history: list.history || [],
+      });
       setNewItemTitle("");
     }
   };
 
-  const handleArchiveItem = id => {
-    const itemToArchive = items.find(item => item.id === id);
-    if (itemToArchive) {
-      // Remove from items list
-      const updatedList = items.filter(item => item.id !== id);
-      updateList(updatedList);
+  const handleItemUpdate = (id, updatedFields) => {
+    const updatedItems = list.items.map(item =>
+      item.id === id ? { ...item, ...updatedFields } : item,
+    );
+    const newRemainingCount = updatedItems.filter(
+      item => !item.isBought,
+    ).length;
+    const newTotalItemsCount = updatedItems.length;
 
-      // Add to history list
-      const updatedHistoryList = [itemToArchive, ...history];
-      setHistory(updatedHistoryList);
-      localStorage.setItem("history", JSON.stringify(updatedHistoryList));
+    updateList({
+      ...list,
+      items: updatedItems,
+      remainingItemsCount: newRemainingCount,
+      totalItemsCount: newTotalItemsCount,
+      history: list.history || [],
+    });
+  };
+
+  const handleArchiveItem = id => {
+    const itemToArchive = list.items.find(item => item.id === id);
+    if (itemToArchive) {
+      const updatedItems = list.items.filter(item => item.id !== id);
+      const updatedHistory = [itemToArchive, ...(list.history || [])];
+      const newRemainingCount = updatedItems.filter(
+        item => !item.isBought,
+      ).length;
+      const newTotalItemsCount = updatedItems.length;
+
+      updateList({
+        ...list,
+        items: updatedItems,
+        remainingItemsCount: newRemainingCount,
+        totalItemsCount: newTotalItemsCount,
+        history: updatedHistory,
+      });
     }
   };
 
-  const updateList = updatedList => {
-    setItems(updatedList);
-    localStorage.setItem("items", JSON.stringify(updatedList));
-
-    // Update the counts after updating the list
-    const remainingItemsCount = updatedList.filter(
-      item => !item.isBought,
-    ).length;
-    const totalItemsCount = updatedList.length;
-    updateRemainingItemsCount(remainingItemsCount);
-    localStorage.setItem("remainingItemsCount", remainingItemsCount);
-    updateTotalItemsCount(totalItemsCount);
-    localStorage.setItem("totalItemsCount", totalItemsCount);
+  const toggleHistoryVisibility = () => {
+    setShowHistory(!showHistory);
   };
 
   const addItemFromHistory = id => {
-    // Find the item in history list
-    const itemToAdd = history.find(item => item.id === id);
-
-    if (itemToAdd) {
-      // Reset the isBought property to false
-      const newItemToAdd = { ...itemToAdd, isBought: false };
-
-      // Remove item from history
-      const updatedHistoryList = history.filter(item => item.id !== id);
-      setHistory(updatedHistoryList);
-      localStorage.setItem("history", JSON.stringify(updatedHistoryList));
-
-      // Add item back to main list
-      const updatedItemsList = [...items, newItemToAdd];
-      updateList(updatedItemsList);
+    const itemToAddBack = (list.history || []).find(item => item.id === id);
+    if (itemToAddBack) {
+      const updatedHistory = (list.history || []).filter(
+        item => item.id !== id,
+      );
+      const updatedItems = [
+        ...list.items,
+        { ...itemToAddBack, isBought: false },
+      ];
+      updateList({ ...list, items: updatedItems, history: updatedHistory });
     }
   };
 
-  function shoppingListPrinter() {
+  const clearArchivedList = () => {
+    updateList({ ...list, history: [] });
+  };
+
+  const handleResetList = () => {
+    const emptyList = {
+      ...list,
+      items: [],
+      remainingItemsCount: 0,
+      totalItemsCount: 0,
+      history: [],
+    };
+    updateList(emptyList);
+  };
+
+  function shoppingListPrinter(currentList) {
     const canvas = document.createElement("canvas");
     canvas.width = 360;
     canvas.height = 800;
@@ -154,14 +146,14 @@ const CSList = ({
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Draw the title
-    const title = "Shopping List";
+    const title = currentList.title || "Shopping List";
     const titleFontSize = 32;
     ctx.font = `${titleFontSize}px Inter`;
     ctx.fillStyle = "blue";
     ctx.fillText(title, 10, titleFontSize);
 
     // Draw the items with Inter font
-    const items = JSON.parse(localStorage.getItem("items") || "[]");
+    const items = currentList.items || [];
     const itemFontSize = 24;
     ctx.font = `${itemFontSize}px Inter`; // Set the font to Inter
     let y = titleFontSize * 2 + 20;
@@ -195,23 +187,19 @@ const CSList = ({
     };
   }
 
-  function clearArchivedList() {
-    localStorage.removeItem("history");
-    setHistory([]);
-  }
+  const handleDownloadList = () => {
+    shoppingListPrinter(list);
+  };
 
-  function clearList() {
-    localStorage.clear();
-    setHistory([]);
-    setItems([]);
-    setNewItemTitle("");
-    updateRemainingItemsCount(0);
-    updateTotalItemsCount(0);
-    updateListTitle("Untitled List");
-    updateDueDate("");
-    setShowHistory(false);
-    updateStore("");
-  }
+  const handleUpdateItemCategory = (id, category) => {
+    const updatedItems = list.items.map(item =>
+      item.id === id ? { ...item, category } : item,
+    );
+    updateList({
+      ...list,
+      items: updatedItems,
+    });
+  };
 
   return (
     <div>
@@ -235,18 +223,16 @@ const CSList = ({
         <div className="flex gap-2">
           <Tooltip title="Reset entire list">
             <Button
-              type="button"
-              onClick={clearList}
+              onClick={handleResetList}
               variant="outlined"
-              endIcon={<ClearIcon />}
+              color="primary"
             >
               Reset List
             </Button>
           </Tooltip>
           <Tooltip title="Download list as image">
             <Button
-              onClick={() => shoppingListPrinter()}
-              type="button"
+              onClick={handleDownloadList}
               variant="contained"
               endIcon={<CloudDownloadIcon />}
             >
@@ -256,28 +242,28 @@ const CSList = ({
         </div>
       </form>
       <List>
-        {items.map(item => (
+        {list.items.map(item => (
           <CSListItem
             key={item.id}
-            id={item.id}
-            title={item.title}
-            quantity={item.quantity}
-            isBought={item.isBought}
-            handleUpdateItemTitle={updatedItemTitle =>
-              handleUpdateItemTitle(item.id, updatedItemTitle)
+            {...item}
+            handleUpdateItemTitle={updatedTitle =>
+              handleItemUpdate(item.id, { title: updatedTitle })
             }
-            handleUpdateItemQuantity={updatedItemQuantity =>
-              handleUpdateItemQuantity(item.id, updatedItemQuantity)
+            handleUpdateItemQuantity={updatedQuantity =>
+              handleItemUpdate(item.id, { quantity: updatedQuantity })
             }
-            handleUpdateItemIsBought={() => handleUpdateItemIsBought(item.id)}
+            handleUpdateItemIsBought={() =>
+              handleItemUpdate(item.id, { isBought: !item.isBought })
+            }
             handleArchiveItem={() => handleArchiveItem(item.id)}
+            handleUpdateItemCategory={(category) => handleUpdateItemCategory(item.id, category)}
           />
         ))}
       </List>
       <div className="mt-2 flex gap-2">
-        {history.length > 0 && (
+        {list.history && list.history.length > 0 && (
           <Button
-            onClick={() => updateShowHistory(!showHistory)}
+            onClick={toggleHistoryVisibility}
             variant="outlined"
             endIcon={showHistory ? <VisibilityOffIcon /> : <VisibilityIcon />}
           >
@@ -285,7 +271,7 @@ const CSList = ({
           </Button>
         )}
 
-        {history.length > 0 && (
+        {list.history && list.history.length > 0 && (
           <Button
             onClick={clearArchivedList}
             variant="contained"
@@ -295,29 +281,24 @@ const CSList = ({
           </Button>
         )}
       </div>
-      {showHistory && (
-        <>
-          <List>
-            {history.map(item => (
-              <HistoryListItem
-                key={item.id}
-                handleAddItem={() => addItemFromHistory(item.id)}
-                {...item}
-              />
-            ))}
-          </List>
-        </>
+      {showHistory && list.history && (
+        <List>
+          {list.history.map(item => (
+            <HistoryListItem
+              key={item.id}
+              {...item}
+              handleAddItem={() => addItemFromHistory(item.id)}
+            />
+          ))}
+        </List>
       )}
     </div>
   );
 };
 
 CSList.propTypes = {
-  updateRemainingItemsCount: PropTypes.func.isRequired,
-  updateTotalItemsCount: PropTypes.func.isRequired,
-  updateListTitle: PropTypes.func.isRequired,
-  updateDueDate: PropTypes.func.isRequired,
-  updateStore: PropTypes.func.isRequired,
+  list: PropTypes.object.isRequired,
+  updateList: PropTypes.func.isRequired,
 };
 
 export default CSList;

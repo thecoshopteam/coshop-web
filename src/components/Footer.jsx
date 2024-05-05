@@ -13,10 +13,12 @@ const Footer = () => {
         textAlign: "center",
         zIndex: 1000,
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "center",
       }}
     >
-      <Link to="/about-us" style={{ marginRight: "20px" }}>About Us</Link>
+      <Link to="/about-us" style={{ marginRight: "20px" }}>
+        About Us
+      </Link>
       <Link to="/faq">FAQ</Link>
     </footer>
   );
