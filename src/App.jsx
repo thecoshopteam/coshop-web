@@ -21,16 +21,15 @@ import AboutUs from "./pages/AboutUs";
 import FAQ from "./pages/FAQ";
 import React, { useState} from 'react';
 import Contacts from "./pages/Contacts"
+import AllLists from "./pages/AllLists"
 
 // Theme imports
-import { ThemeProvider } from "./context/themeContent"
-
+import { ThemeProvider } from "./context/themeContent";
 
 const App = () => {
-
   return (
     <AuthContextProvider>
-      <ThemeProvider> 
+      <ThemeProvider>
         <Router>
           <Routes>
             <Route
@@ -115,6 +114,16 @@ const App = () => {
                 <ProtectedRoute>
                   <AppLayout>
                     <Contacts />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/lists"
+              element={
+                <ProtectedRoute>
+                  <AppLayout>
+                    <AllLists />
                   </AppLayout>
                 </ProtectedRoute>
               }

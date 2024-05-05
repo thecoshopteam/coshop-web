@@ -13,7 +13,8 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Divider from "@mui/material/Divider";
-import ContactsIcon from "@mui/icons-material/Contacts"; // Added ContactsIcon
+import ContactsIcon from "@mui/icons-material/Contacts";
+import ViewListIcon from "@mui/icons-material/ViewList";
 import { useTheme } from "../context/themeContent";
 
 const Navbar = () => {
@@ -31,14 +32,14 @@ const Navbar = () => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleMenu = (event) => {
+  const handleMenu = event => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   const { switchTheme } = useTheme();
 
   return (
@@ -61,7 +62,19 @@ const Navbar = () => {
             <a href="/">CoShop</a>
           </Typography>
           <Switch onChange={switchTheme} /> {/* Moved Switch component */}
-          <Tooltip title="Go to Contacts">
+          <Tooltip title="Go to lists">
+              <IconButton
+                size="large"
+                edge="end"
+                color="inherit"
+                aria-label="lists"
+                sx={{ mr: 2 }}
+                onClick={() => navigate("/lists")}
+          >
+              <ViewListIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Go to contacts">
             <IconButton
               size="large"
               edge="end"
