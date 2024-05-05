@@ -19,16 +19,18 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import AboutUs from "./pages/AboutUs";
 import FAQ from "./pages/FAQ";
-import React, { useState } from "react";
-import Contacts from "./pages/Contacts";
+import React, { useState} from 'react';
+import Contacts from "./pages/Contacts"
 
 // Theme imports
-import { ThemeProvider } from "./context/themeContent";
+import { ThemeProvider } from "./context/themeContent"
+
 
 const App = () => {
+
   return (
     <AuthContextProvider>
-      <ThemeProvider>
+      <ThemeProvider> 
         <Router>
           <Routes>
             <Route
