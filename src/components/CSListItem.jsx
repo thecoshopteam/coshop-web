@@ -6,6 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import TextField from "@mui/material/TextField";
+import React from 'react';
 
 const CSListItem = ({
   id,
@@ -78,6 +79,7 @@ const CSListItem = ({
       </select>
       <TextField
         id={`item-quantity-${id}`}
+        data-testid={`item-quantity-input-${id}`}
         type="number"
         defaultValue={quantity}
         onBlur={(e) => handleUpdateItemQuantity(parseInt(e.target.value))}
