@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
-
+import { useTheme } from '@mui/material/styles';
 const Footer = () => {
+  const theme = useTheme();
   return (
     <footer
       style={{
         width: "100%",
         position: "absolute",
         bottom: 0,
-        backgroundColor: "#f0f0f0",
+        backgroundColor: theme.palette.primary.light,
         padding: "20px",
         textAlign: "center",
         zIndex: 1000,

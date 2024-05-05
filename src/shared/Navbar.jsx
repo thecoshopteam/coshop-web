@@ -7,11 +7,13 @@ import Toolbar from "@mui/material/Toolbar";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
+import Switch from "@mui/material/Switch";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Divider from "@mui/material/Divider";
+import {useTheme} from "../context/themeContent"
 
 const Navbar = () => {
   const { logoutUser } = UserAuth();
@@ -35,7 +37,7 @@ const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const {switchTheme} = useTheme();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -55,6 +57,8 @@ const Navbar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <a href="/">CoShop</a>
           </Typography>
+            <Switch onChange={switchTheme}>
+            </Switch>
           <div>
             <Tooltip title="Go to profile">
               <IconButton

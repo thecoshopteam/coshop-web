@@ -19,15 +19,17 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import AboutUs from "./pages/AboutUs";
 import FAQ from "./pages/FAQ";
+import React, { useState} from 'react';
 
 // Theme imports
-import { ThemeProvider } from "@mui/material";
-import CoShopTheme from "./lib/CoShopTheme";
+import { ThemeProvider } from "./context/themeContent"
+
 
 const App = () => {
+
   return (
     <AuthContextProvider>
-      <ThemeProvider theme={CoShopTheme}>
+      <ThemeProvider> 
         <Router>
           <Routes>
             <Route
