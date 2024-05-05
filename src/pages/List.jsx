@@ -82,6 +82,8 @@ const List = () => {
     updateLocalStorage(updatedLists);
   };
 
+  const [store, setStore] = useState(localStorage.getItem("store") || "");
+
   // Handler for list selection change
   const handleListChange = index => {
     setCurrentListIndex(index);
@@ -101,6 +103,11 @@ const List = () => {
     const updatedLists = [...lists, newList];
     setLists(updatedLists);
     updateLocalStorage(updatedLists);
+  };
+
+const handleStoreChange = newValue => {
+    setStore(newValue);
+    localStorage.setItem("store", newValue);
   };
 
   const handleDeleteList = () => {
