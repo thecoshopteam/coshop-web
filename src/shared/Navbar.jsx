@@ -13,7 +13,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Divider from "@mui/material/Divider";
-import {useTheme} from "../context/themeContent"
+import { useTheme } from "../context/themeContent";
 import ContactsIcon from "@mui/icons-material/Contacts";
 
 const Navbar = () => {
@@ -38,7 +38,7 @@ const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const {switchTheme} = useTheme();
+  const { switchTheme } = useTheme();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -58,8 +58,7 @@ const Navbar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <a href="/">CoShop</a>
           </Typography>
-            <Switch onChange={switchTheme}>
-            </Switch>
+          <Switch onChange={switchTheme}></Switch>
           <Tooltip title="Go to Contacts">
             <IconButton
               size="large"

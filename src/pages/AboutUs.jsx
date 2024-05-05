@@ -1,10 +1,16 @@
-import React from 'react';
-import { useTheme } from '@mui/material/styles';
+import React from "react";
+import { useTheme } from "@mui/material/styles";
 
 const AboutUs = () => {
   const theme = useTheme();
   return (
-    <div style={{ backgroundColor: theme.palette.background.default, textAlign: `center`, margin: "20px"}}>
+    <div
+      style={{
+        backgroundColor: theme.palette.background.default,
+        textAlign: `center`,
+        margin: "20px",
+      }}
+    >
       <h1 style={{ fontSize: "larger" }}>About Us</h1>
       <ul style={{ listStyleType: "none", padding: "0" }}>
         <li style={{ margin: "10px 0" }}>

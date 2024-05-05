@@ -53,7 +53,6 @@ const CSList = ({ list, updateList }) => {
       ).length;
       const newTotalItemsCount = updatedItems.length;
 
-
       updateList({
         ...list,
         items: updatedItems,
@@ -256,7 +255,9 @@ const CSList = ({ list, updateList }) => {
               handleItemUpdate(item.id, { isBought: !item.isBought })
             }
             handleArchiveItem={() => handleArchiveItem(item.id)}
-            handleUpdateItemCategory={(category) => handleUpdateItemCategory(item.id, category)}
+            handleUpdateItemCategory={category =>
+              handleUpdateItemCategory(item.id, category)
+            }
           />
         ))}
       </List>
