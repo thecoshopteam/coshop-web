@@ -13,11 +13,13 @@ const CSListItem = ({
   title,
   quantity,
   isBought,
+  specialInstructions,
   category,
   handleUpdateItemTitle,
   handleUpdateItemQuantity,
   handleUpdateItemIsBought,
   handleArchiveItem,
+  handleUpdateSpecialInstructions,
   handleUpdateItemCategory,
 }) => {
   return (
@@ -42,6 +44,16 @@ const CSListItem = ({
         disableUnderline={true}
         disabled={isBought}
         sx={{ flex: 1 }}
+      />
+      <TextField
+        id={`item-special-instructions-${id}`}
+        label="Special Instructions"
+        value={specialInstructions}
+        onChange={e => handleUpdateSpecialInstructions(e.target.value)}
+        variant="outlined"
+        sx={{ width: "160px", marginRight: "8px" }}
+        margin="dense"
+        size="small"
       />
       <select
         value={category}
