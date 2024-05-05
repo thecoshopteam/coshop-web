@@ -1,5 +1,5 @@
 import { useState } from "react";
-import React from 'react';
+import React from "react";
 import PropTypes from "prop-types";
 import List from "@mui/material/List";
 import Input from "@mui/material/Input";
@@ -214,7 +214,11 @@ const CSList = ({ list, updateList }) => {
             required
           />
           <Tooltip title="Add item to list">
-            <Button type="submit" variant="contained" data-testid="add-item-button">
+            <Button
+              type="submit"
+              variant="contained"
+              data-testid="add-item-button"
+            >
               <AddIcon />
             </Button>
           </Tooltip>

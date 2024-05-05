@@ -180,12 +180,12 @@
 //  });
 //});
 
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import CSList from './CSList';
-import CSListItem from './CSListItem';
+import React from "react";
+import { render, fireEvent } from "@testing-library/react";
+import CSList from "./CSList";
+import CSListItem from "./CSListItem";
 
-test('adds item to the list and updates its quantity when form is submitted and quantity is changed', () => {
+test("adds item to the list and updates its quantity when form is submitted and quantity is changed", () => {
   const mockList = {
     items: [],
     remainingItemsCount: 0,
@@ -193,37 +193,39 @@ test('adds item to the list and updates its quantity when form is submitted and 
     history: [],
   };
 
-// Define the id for the test
-const itemId = 123;
+  // Define the id for the test
+  const itemId = 123;
 
-// Render the CSListItem component with the id prop
-const { getByTestId } = render(
-  <CSListItem
-    id={itemId}
-    title="Test Item"
-    quantity={1}
-    isBought={false}
-    handleUpdateItemTitle={jest.fn()}
-    handleUpdateItemQuantity={jest.fn()}
-    handleUpdateItemIsBought={jest.fn()}
-    handleArchiveItem={jest.fn()}
-    handleUpdateItemCategory={jest.fn()}
-  />
-);
+  // Render the CSListItem component with the id prop
+  const { getByTestId } = render(
+    <CSListItem
+      id={itemId}
+      title="Test Item"
+      quantity={1}
+      isBought={false}
+      handleUpdateItemTitle={jest.fn()}
+      handleUpdateItemQuantity={jest.fn()}
+      handleUpdateItemIsBought={jest.fn()}
+      handleArchiveItem={jest.fn()}
+      handleUpdateItemCategory={jest.fn()}
+    />,
+  );
   const mockUpdateList = jest.fn();
 
   const { getByPlaceholderText } = render(
-    <CSList list={mockList} updateList={mockUpdateList} />
+    <CSList list={mockList} updateList={mockUpdateList} />,
   );
 
-  const input = getByPlaceholderText('Enter item name');
-  const submitButton = getByTestId('add-item-button');
-  fireEvent.change(input, { target: { value: 'New Item' } });
+  const input = getByPlaceholderText("Enter item name");
+  const submitButton = getByTestId("add-item-button");
+  fireEvent.change(input, { target: { value: "New Item" } });
   fireEvent.click(submitButton);
 
-  expect(mockUpdateList).toHaveBeenCalledWith(expect.objectContaining({
-    items: expect.arrayContaining([
-      expect.objectContaining({ title: 'New Item', quantity: 1 }),
-    ]),
-  }));
+  expect(mockUpdateList).toHaveBeenCalledWith(
+    expect.objectContaining({
+      items: expect.arrayContaining([
+        expect.objectContaining({ title: "New Item", quantity: 1 }),
+      ]),
+    }),
+  );
 });

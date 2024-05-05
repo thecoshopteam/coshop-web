@@ -6,7 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import TextField from "@mui/material/TextField";
-import React from 'react';
+import React from "react";
 
 const CSListItem = ({
   id,
