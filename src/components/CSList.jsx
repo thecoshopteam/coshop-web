@@ -1,5 +1,4 @@
 import { useState } from "react";
-import React from "react";
 import PropTypes from "prop-types";
 import List from "@mui/material/List";
 import Input from "@mui/material/Input";
@@ -12,7 +11,6 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import CSListItem from "./CSListItem";
 import HistoryListItem from "./HistoryListItem";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 const CSList = ({ list, updateList }) => {
   const [newItemTitle, setNewItemTitle] = useState("");
@@ -103,7 +101,7 @@ const CSList = ({ list, updateList }) => {
     }
   };
 
-// Handler for updating special instructions
+  // Handler for updating special instructions
   const handleUpdateSpecialInstructions = (id, instructions) => {
     const updatedItems = list.items.map(item =>
       item.id === id ? { ...item, specialInstructions: instructions } : item,
@@ -261,7 +259,7 @@ const CSList = ({ list, updateList }) => {
             key={item.id}
             {...item}
             handleUpdateSpecialInstructions={instructions =>
-                handleUpdateSpecialInstructions(item.id, instructions)
+              handleUpdateSpecialInstructions(item.id, instructions)
             }
             handleUpdateItemTitle={updatedTitle =>
               handleItemUpdate(item.id, { title: updatedTitle })
