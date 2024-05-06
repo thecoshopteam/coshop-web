@@ -103,6 +103,17 @@ const CSList = ({ list, updateList }) => {
     }
   };
 
+// Handler for updating special instructions
+  const handleUpdateSpecialInstructions = (id, instructions) => {
+    const updatedItems = list.items.map(item =>
+      item.id === id ? { ...item, specialInstructions: instructions } : item,
+    );
+    updateList({
+      ...list,
+      items: updatedItems,
+    });
+    updateLocalStorage(lists); // Persist the updated list in local storage
+  };
   const toggleHistoryVisibility = () => {
     setShowHistory(!showHistory);
   };
@@ -249,6 +260,9 @@ const CSList = ({ list, updateList }) => {
           <CSListItem
             key={item.id}
             {...item}
+            handleUpdateSpecialInstructions={instructions =>
+                handleUpdateSpecialInstructions(item.id, instructions)
+            }
             handleUpdateItemTitle={updatedTitle =>
               handleItemUpdate(item.id, { title: updatedTitle })
             }
