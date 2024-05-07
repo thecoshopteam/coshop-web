@@ -19,9 +19,9 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import AboutUs from "./pages/AboutUs";
 import FAQ from "./pages/FAQ";
-import React, { useState} from 'react';
-import Contacts from "./pages/Contacts"
-import AllLists from "./pages/AllLists"
+import React, { useState } from "react";
+import Contacts from "./pages/Contacts";
+import AllLists from "./pages/AllLists";
 
 // Theme imports
 import { ThemeProvider } from "./context/themeContent";

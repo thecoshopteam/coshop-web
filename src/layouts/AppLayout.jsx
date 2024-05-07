@@ -4,9 +4,9 @@ import Footer from "../components/Footer";
 
 const AppLayout = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-svh">
+    <div className="flex min-h-svh flex-col">
       <Navbar />
-      <main className="px-4 flex-grow">{children}</main>
+      <main className="flex-grow px-4">{children}</main>
       <Footer />
     </div>
   );

@@ -3,7 +3,8 @@ import { useTheme } from "@mui/material/styles";
 const Footer = () => {
   const theme = useTheme();
   return (
-    <footer className = "mt-auto w-full flex justify-center p-5"
+    <footer
+      className="mt-auto flex w-full justify-center p-5"
       style={{
         backgroundColor: theme.palette.primary.light,
         zIndex: 1000,

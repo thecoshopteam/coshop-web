@@ -63,14 +63,14 @@ const Navbar = () => {
           </Typography>
           <Switch onChange={switchTheme} /> {/* Moved Switch component */}
           <Tooltip title="Go to lists">
-              <IconButton
-                size="large"
-                edge="end"
-                color="inherit"
-                aria-label="lists"
-                sx={{ mr: 2 }}
-                onClick={() => navigate("/lists")}
-          >
+            <IconButton
+              size="large"
+              edge="end"
+              color="inherit"
+              aria-label="lists"
+              sx={{ mr: 2 }}
+              onClick={() => navigate("/lists")}
+            >
               <ViewListIcon />
             </IconButton>
           </Tooltip>
